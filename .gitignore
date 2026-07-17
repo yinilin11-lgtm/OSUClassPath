@@ -1,0 +1,29 @@
+# Build output
+bin/
+obj/
+.codex-build/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET / .NET local files
+appsettings.*.local.json
+secrets.json
+
+# Local databases
+*.db
+*.db-shm
+*.db-wal
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# OS files
+Thumbs.db
+Desktop.ini

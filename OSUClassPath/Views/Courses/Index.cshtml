@@ -1,0 +1,86 @@
+@model IEnumerable<OSUClassPath.Models.Course>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>課程列表</h1>
+
+<form asp-action="Index" method="get" class="row g-2 mb-4">
+    <div class="col-md-6">
+        <input type="text"
+               name="searchString"
+               value="@ViewData["CurrentFilter"]"
+               class="form-control"
+               placeholder="輸入課程代碼或名稱，例如 CSE 2221" />
+    </div>
+
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">搜尋</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">清除</a>
+    </div>
+</form>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Credits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrerequisiteText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SourceUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastVerified)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.CourseCode)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Credits)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.PrerequisiteText)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.SourceUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.LastVerified)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

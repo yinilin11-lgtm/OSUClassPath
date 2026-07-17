@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "AI 課程助理";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="mb-2">OSU CSE 課程助理</h1>
+
+            <p class="text-muted mb-4">
+                詢問 Ohio State CSE 課程內容、學分與先修條件。
+            </p>
+
+            <form asp-controller="Chat"
+                  asp-action="Index"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div class="input-group mb-4">
+                    <input type="text"
+                           name="question"
+                           value="@ViewBag.Question"
+                           class="form-control"
+                           placeholder="例如：CSE 2221 是什麼？"
+                           autocomplete="off" />
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        詢問
+                    </button>
+                </div>
+            </form>
+
+            @if (ViewBag.Answer != null)
+            {
+                <div class="card">
+                    <div class="card-header">
+                        回答
+                    </div>
+
+                    <div class="card-body">
+                        <p style="white-space: pre-line">
+                            @ViewBag.Answer
+                        </p>
+
+                        @if (ViewBag.SourceUrl != null)
+                        {
+                            <a href="@ViewBag.SourceUrl"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                查看官方來源
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

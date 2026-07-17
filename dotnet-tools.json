@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "microsoft.dotnet-scaffold": {
+      "version": "20.0.0",
+      "commands": [
+        "dotnet-scaffold"
+      ],
+      "rollForward": false
+    }
+  }
+}
