@@ -1,60 +1,38 @@
-﻿@{
+@{
     ViewData["Title"] = "AI 課程助理";
 }
 
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <h1 class="mb-2">OSU CSE 課程助理</h1>
-
-            <p class="text-muted mb-4">
-                詢問 Ohio State CSE 課程內容、學分與先修條件。
+<section class="agent-shell">
+    <div class="agent-header">
+        <div>
+            <p class="agent-kicker">C# API + JavaScript Frontend</p>
+            <h1>OSUClassPath AI Agent</h1>
+            <p>
+                你可以詢問課程內容、學分、先修條件，或請它幫你規劃修課方向。
             </p>
+        </div>
+        <span class="agent-status" id="agentStatus">Ready</span>
+    </div>
 
-            <form asp-controller="Chat"
-                  asp-action="Index"
-                  method="post">
-
-                @Html.AntiForgeryToken()
-
-                <div class="input-group mb-4">
-                    <input type="text"
-                           name="question"
-                           value="@ViewBag.Question"
-                           class="form-control"
-                           placeholder="例如：CSE 2221 是什麼？"
-                           autocomplete="off" />
-
-                    <button type="submit"
-                            class="btn btn-primary">
-                        詢問
-                    </button>
-                </div>
-            </form>
-
-            @if (ViewBag.Answer != null)
-            {
-                <div class="card">
-                    <div class="card-header">
-                        回答
-                    </div>
-
-                    <div class="card-body">
-                        <p style="white-space: pre-line">
-                            @ViewBag.Answer
-                        </p>
-
-                        @if (ViewBag.SourceUrl != null)
-                        {
-                            <a href="@ViewBag.SourceUrl"
-                               target="_blank"
-                               rel="noopener noreferrer">
-                                查看官方來源
-                            </a>
-                        }
-                    </div>
-                </div>
-            }
+    <div class="agent-chat" id="agentMessages" aria-live="polite">
+        <div class="agent-message agent-message-assistant">
+            <div class="agent-avatar">AI</div>
+            <div class="agent-bubble">
+                嗨，我是你的課程 AI agent。你可以問我像是「CSE 2221 需要什麼先修？」或「我想走軟體工程方向，該怎麼排課？」
+            </div>
         </div>
     </div>
-</div>
+
+    <form class="agent-composer" id="agentForm">
+        <label class="visually-hidden" for="agentInput">輸入問題</label>
+        <textarea id="agentInput"
+                  rows="2"
+                  placeholder="輸入你的問題，例如：CSE 2221 是什麼？"
+                  required></textarea>
+        <button type="submit" id="agentSubmit">送出</button>
+    </form>
+</section>
+
+@section Scripts {
+    <script src="~/js/agentChat.js" asp-append-version="true"></script>
+}
