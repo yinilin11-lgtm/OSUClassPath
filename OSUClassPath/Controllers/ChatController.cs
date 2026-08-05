@@ -1,33 +1,40 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OpenAI.Chat;
 using OSUClassPath.Data;
 using OSUClassPath.Models;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace OSUClassPath.Controllers;
 
 public class ChatController : Controller
 {
+    private const string NoCourseContext = "No matching course records found.";
+    private const string NoScheduleContext = "No recommended schedule records found.";
+
     private readonly AdvisorDbContext _context;
     private readonly IConfiguration _configuration;
     private readonly IWebHostEnvironment _environment;
     private readonly ILogger<ChatController> _logger;
+    private readonly IHttpClientFactory _httpClientFactory;
 
     public ChatController(
         AdvisorDbContext context,
         IConfiguration configuration,
         IWebHostEnvironment environment,
-        ILogger<ChatController> logger)
+        ILogger<ChatController> logger,
+        IHttpClientFactory httpClientFactory)
     {
         _context = context;
         _configuration = configuration;
         _environment = environment;
         _logger = logger;
+        _httpClientFactory = httpClientFactory;
     }
 
-    [HttpGet]
     public IActionResult Index()
     {
         return View();
@@ -47,6 +54,7 @@ public class ChatController : Controller
     }
 
     [HttpPost("/api/agent/chat")]
+    [HttpPost("/api/course-advisor/chat")]
     [Produces("application/json")]
     [ProducesResponseType<AgentChatResponse>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -61,41 +69,43 @@ public class ChatController : Controller
             return BadRequest(new { error = "Message is required." });
         }
 
-        var apiKey = GetOpenAiApiKey();
+        var apiKey = GetGeminiApiKey();
         if (string.IsNullOrWhiteSpace(apiKey))
         {
-            _logger.LogError("OpenAI API key is not configured.");
+            _logger.LogError("Gemini API key is not configured.");
             return Problem(
-                title: "OpenAI API key is missing.",
-                detail: "Set OpenAI:ApiKey in user secrets, or set the OPENAI_API_KEY environment variable.",
+                title: "Gemini API key is missing.",
+                detail: "Set Gemini:ApiKey in user secrets, or set the GEMINI_API_KEY environment variable.",
                 statusCode: StatusCodes.Status500InternalServerError);
         }
 
-        var model = _configuration["OpenAI:Model"] ?? "gpt-5.6-sol";
-        var client = new ChatClient(model, apiKey);
+        var model = _configuration["Gemini:Model"] ?? "gemini-3.5-flash";
         var courseContext = await BuildCourseContextAsync(request.Message, cancellationToken);
+        var scheduleContext = await BuildScheduleContextAsync(cancellationToken);
+        var usedContext = courseContext != NoCourseContext || scheduleContext != NoScheduleContext;
 
-        var messages = new List<ChatMessage>
-        {
-            new SystemChatMessage(
-                "You are an AI course planning agent for the OSUClassPath ASP.NET app. " +
-                "Answer in Traditional Chinese by default. Be concise, practical, and friendly. " +
-                "Use the provided course context when it is relevant. If the context is not enough, say what information is missing."),
-            new UserChatMessage(
-                $"Course context from the local database:\n{courseContext}\n\n" +
-                $"Student question:\n{request.Message.Trim()}")
-        };
+        var systemPrompt =
+            "You are an AI course planning agent for the OSUClassPath ASP.NET app. " +
+            "Answer in Traditional Chinese by default. Be concise, practical, and friendly. " +
+            "Use the provided course catalog and recommended schedule context when relevant. " +
+            "Treat GE entries as overall General Education placeholders, not specific course recommendations. " +
+            "If the context is not enough, say what information is missing.";
+
+        var userPrompt =
+            $"Course context from the local database:\n{courseContext}\n\n" +
+            $"Recommended schedule context:\n{scheduleContext}\n\n" +
+            $"Student question:\n{request.Message.Trim()}";
 
         try
         {
-            ChatCompletion completion = await client.CompleteChatAsync(
-                messages,
-                new ChatCompletionOptions(),
+            var answer = await GenerateGeminiContentAsync(
+                apiKey,
+                model,
+                systemPrompt,
+                userPrompt,
                 cancellationToken);
 
-            var answer = string.Concat(completion.Content.Select(part => part.Text));
-
-            return Ok(new AgentChatResponse(answer, model, courseContext != "No matching course records found."));
+            return Ok(new AgentChatResponse(answer, model, usedContext));
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
@@ -103,10 +113,10 @@ public class ChatController : Controller
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception, "OpenAI API request failed.");
+            _logger.LogError(exception, "Gemini API request failed.");
             var detail = _environment.IsDevelopment()
-                ? GetUserFriendlyOpenAiError(exception)
-                : "Please check the model, API key, network connection, and OpenAI account status.";
+                ? GetUserFriendlyGeminiError(exception)
+                : "Please check the Gemini model, API key, network connection, and account status.";
 
             return Problem(
                 title: "AI agent request failed.",
@@ -114,80 +124,129 @@ public class ChatController : Controller
                 statusCode: StatusCodes.Status502BadGateway);
         }
     }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Index(string question)
+    private string? GetGeminiApiKey()
     {
-        ViewBag.Question = question;
-
-        if (string.IsNullOrWhiteSpace(question))
-        {
-            ViewBag.Answer = "請輸入一個課程問題。";
-            return View();
-        }
-
-        var match = Regex.Match(
-            question.ToUpperInvariant(),
-            @"\b[A-Z]{2,10}\s*\d{4}\b");
-
-        if (!match.Success)
-        {
-            ViewBag.Answer = "我目前可以辨識課程代碼，例如 CSE 2221。";
-            return View();
-        }
-
-        var rawCode = Regex.Replace(match.Value, @"\s+", "");
-        var department = Regex.Match(rawCode, @"^[A-Z]+").Value;
-        var number = Regex.Match(rawCode, @"\d{4}$").Value;
-        var courseCode = $"{department} {number}";
-
-        var course = await _context.Courses
-            .FirstOrDefaultAsync(c => c.CourseCode == courseCode);
-
-        if (course == null)
-        {
-            ViewBag.Answer = $"資料庫裡找不到 {courseCode}。";
-            return View();
-        }
-
-        ViewBag.Answer =
-            $"{course.CourseCode} - {course.Title}\n" +
-            $"學分：{course.Credits}\n\n" +
-            $"課程介紹：{course.Description}\n\n" +
-            $"先修條件：{course.PrerequisiteText}";
-
-        ViewBag.SourceUrl = course.SourceUrl;
-
-        return View();
+        return _configuration["Gemini:ApiKey"]
+            ?? Environment.GetEnvironmentVariable("GEMINI_API_KEY");
     }
 
-    private string? GetOpenAiApiKey()
+    private async Task<string> GenerateGeminiContentAsync(
+        string apiKey,
+        string model,
+        string systemPrompt,
+        string userPrompt,
+        CancellationToken cancellationToken)
     {
-        return _configuration["OpenAI:ApiKey"]
-            ?? Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+        var client = _httpClientFactory.CreateClient();
+        using var request = new HttpRequestMessage(
+            HttpMethod.Post,
+            $"https://generativelanguage.googleapis.com/v1beta/models/{Uri.EscapeDataString(model)}:generateContent");
+
+        request.Headers.Add("x-goog-api-key", apiKey);
+        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        request.Content = JsonContent.Create(new
+        {
+            systemInstruction = new
+            {
+                parts = new[]
+                {
+                    new { text = systemPrompt }
+                }
+            },
+            contents = new[]
+            {
+                new
+                {
+                    role = "user",
+                    parts = new[]
+                    {
+                        new { text = userPrompt }
+                    }
+                }
+            }
+        });
+
+        using var response = await client.SendAsync(request, cancellationToken);
+        var responseBody = await response.Content.ReadAsStringAsync(cancellationToken);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new InvalidOperationException($"Gemini API returned HTTP {(int)response.StatusCode}: {ExtractGeminiError(responseBody)}");
+        }
+
+        using var document = JsonDocument.Parse(responseBody);
+        var root = document.RootElement;
+
+        if (!root.TryGetProperty("candidates", out var candidates) || candidates.GetArrayLength() == 0)
+        {
+            throw new InvalidOperationException("Gemini API did not return any candidates.");
+        }
+
+        var builder = new StringBuilder();
+        var parts = candidates[0]
+            .GetProperty("content")
+            .GetProperty("parts");
+
+        foreach (var part in parts.EnumerateArray())
+        {
+            if (part.TryGetProperty("text", out var text))
+            {
+                builder.Append(text.GetString());
+            }
+        }
+
+        var answer = builder.ToString();
+
+        if (string.IsNullOrWhiteSpace(answer))
+        {
+            throw new InvalidOperationException("Gemini API returned an empty response.");
+        }
+
+        return answer;
     }
 
-    private static string GetUserFriendlyOpenAiError(Exception exception)
+    private static string ExtractGeminiError(string responseBody)
+    {
+        try
+        {
+            using var document = JsonDocument.Parse(responseBody);
+            var root = document.RootElement;
+
+            if (root.TryGetProperty("error", out var error)
+                && error.TryGetProperty("message", out var message))
+            {
+                return message.GetString() ?? responseBody;
+            }
+        }
+        catch (JsonException)
+        {
+            return responseBody;
+        }
+
+        return responseBody;
+    }
+
+    private static string GetUserFriendlyGeminiError(Exception exception)
     {
         var message = exception.Message;
 
-        if (message.Contains("insufficient_quota", StringComparison.OrdinalIgnoreCase)
-            || message.Contains("exceeded your current quota", StringComparison.OrdinalIgnoreCase))
+        if (message.Contains("API key not valid", StringComparison.OrdinalIgnoreCase)
+            || message.Contains("invalid api key", StringComparison.OrdinalIgnoreCase))
         {
-            return "OpenAI API 目前沒有可用額度。請到 OpenAI Platform 確認 billing、credit 或 usage limit，補上額度後重新送出問題即可。";
+            return "Gemini API key is invalid. Please create a new API key in Google AI Studio and set Gemini:ApiKey with dotnet user-secrets.";
         }
 
-        if (message.Contains("invalid_api_key", StringComparison.OrdinalIgnoreCase)
-            || message.Contains("incorrect api key", StringComparison.OrdinalIgnoreCase))
+        if (message.Contains("quota", StringComparison.OrdinalIgnoreCase)
+            || message.Contains("rate limit", StringComparison.OrdinalIgnoreCase))
         {
-            return "OpenAI API key 無效。請重新建立 API key，並用 dotnet user-secrets 更新 OpenAI:ApiKey。";
+            return "Gemini API quota or rate limit was reached. Please check your Google AI Studio or Google Cloud quota and billing settings.";
         }
 
         if (message.Contains("model", StringComparison.OrdinalIgnoreCase)
-            && message.Contains("not", StringComparison.OrdinalIgnoreCase))
+            && (message.Contains("not found", StringComparison.OrdinalIgnoreCase)
+                || message.Contains("not supported", StringComparison.OrdinalIgnoreCase)))
         {
-            return $"OpenAI 模型設定可能不可用。原始錯誤：{message}";
+            return $"Gemini 璅∪?閮剖??航銝?具?憪隤歹?{message}";
         }
 
         return message;
@@ -206,6 +265,7 @@ public class ChatController : Controller
         if (courseCodes.Count > 0)
         {
             courses = await _context.Courses
+                .AsNoTracking()
                 .Where(course => courseCodes.Contains(course.CourseCode))
                 .OrderBy(course => course.CourseCode)
                 .Take(8)
@@ -238,7 +298,7 @@ public class ChatController : Controller
 
         if (courses.Count == 0)
         {
-            return "No matching course records found.";
+            return NoCourseContext;
         }
 
         var contextBuilder = new StringBuilder();
@@ -250,6 +310,46 @@ public class ChatController : Controller
             contextBuilder.AppendLine($"  Description: {course.Description}");
             contextBuilder.AppendLine($"  Prerequisites: {course.PrerequisiteText}");
             contextBuilder.AppendLine($"  Source: {course.SourceUrl}");
+        }
+
+        return contextBuilder.ToString();
+    }
+
+    private async Task<string> BuildScheduleContextAsync(CancellationToken cancellationToken)
+    {
+        var terms = await _context.RecommendedPlanTerms
+            .AsNoTracking()
+            .Include(term => term.Items.OrderBy(item => item.SortOrder))
+            .OrderBy(term => term.SortOrder)
+            .ToListAsync(cancellationToken);
+
+        if (terms.Count == 0)
+        {
+            return NoScheduleContext;
+        }
+
+        var contextBuilder = new StringBuilder();
+
+        foreach (var term in terms)
+        {
+            contextBuilder.AppendLine($"{term.DisplayName} ({term.RecommendedCredits} credits):");
+
+            foreach (var item in term.Items.OrderBy(item => item.SortOrder))
+            {
+                var typeLabel = item.ItemType switch
+                {
+                    RecommendedPlanItemType.GeneralEducation => "GE placeholder",
+                    RecommendedPlanItemType.Elective => "Elective",
+                    RecommendedPlanItemType.Requirement => "Requirement choice",
+                    _ => "Course"
+                };
+
+                var notes = string.IsNullOrWhiteSpace(item.Notes)
+                    ? string.Empty
+                    : $" Notes: {item.Notes}";
+
+                contextBuilder.AppendLine($"- {item.CourseCode}: {item.Title}, {item.Credits} credits, {typeLabel}.{notes}");
+            }
         }
 
         return contextBuilder.ToString();

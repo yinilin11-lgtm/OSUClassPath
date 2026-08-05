@@ -3,6 +3,7 @@ const input = document.getElementById("agentInput");
 const submitButton = document.getElementById("agentSubmit");
 const messages = document.getElementById("agentMessages");
 const statusLabel = document.getElementById("agentStatus");
+const suggestionButtons = document.querySelectorAll("[data-agent-question]");
 
 function appendMessage(role, text) {
     const message = document.createElement("div");
@@ -30,27 +31,25 @@ function setLoading(isLoading) {
     statusLabel.textContent = isLoading ? "Thinking" : "Ready";
 }
 
-form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const message = input.value.trim();
-    if (!message) {
+async function sendMessage(message) {
+    const trimmedMessage = message.trim();
+    if (!trimmedMessage) {
         return;
     }
 
-    appendMessage("user", message);
+    appendMessage("user", trimmedMessage);
     input.value = "";
     setLoading(true);
 
-    const pendingMessage = appendMessage("assistant", "思考中...");
+    const pendingMessage = appendMessage("assistant", "正在整理課程資料並詢問 AI...");
 
     try {
-        const response = await fetch("/api/agent/chat", {
+        const response = await fetch("/api/course-advisor/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ message })
+            body: JSON.stringify({ message: trimmedMessage })
         });
 
         const data = await response.json();
@@ -61,7 +60,7 @@ form.addEventListener("submit", async (event) => {
 
         const contextNote = data.usedCourseContext
             ? ""
-            : "\n\n補充：這次沒有找到直接相關的本機課程資料，所以回答主要來自模型推論。";
+            : "\n\n補充：這次沒有找到直接相關的本機資料，所以回答主要來自模型推論。";
 
         pendingMessage.querySelector(".agent-bubble").textContent = `${data.answer}${contextNote}`;
     } catch (error) {
@@ -71,4 +70,16 @@ form.addEventListener("submit", async (event) => {
         setLoading(false);
         input.focus();
     }
+}
+
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    await sendMessage(input.value);
+});
+
+suggestionButtons.forEach((button) => {
+    button.addEventListener("click", async () => {
+        input.value = button.dataset.agentQuestion || "";
+        await sendMessage(input.value);
+    });
 });

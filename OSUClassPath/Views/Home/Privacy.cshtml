@@ -1,6 +1,47 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
+@{
+    ViewData["Title"] = "Data & Privacy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<section class="info-page">
+    <div class="section-heading">
+        <span class="section-label">Project information</span>
+        <h1>Data & Privacy</h1>
+        <p>
+            This page explains how OSU CoursePath handles local data and AI requests during development and portfolio review.
+        </p>
+    </div>
+
+    <div class="info-grid">
+        <article class="info-card">
+            <h2>Local Application Data</h2>
+            <p>
+                Course, student, and course-selection records are stored in a local SQLite database used by the app.
+                This project is intended for learning, demonstration, and portfolio use.
+            </p>
+        </article>
+
+        <article class="info-card">
+            <h2>API Keys</h2>
+            <p>
+                API keys should be stored with user secrets or environment variables. They should not be committed to GitHub
+                or written directly into source code.
+            </p>
+        </article>
+
+        <article class="info-card">
+            <h2>AI Chat Requests</h2>
+            <p>
+                When the AI advisor is configured, the app sends the user's question and relevant course context to the
+                configured AI provider so it can generate a response.
+            </p>
+        </article>
+
+        <article class="info-card">
+            <h2>Portfolio Scope</h2>
+            <p>
+                OSU CoursePath is not an official advising system. Academic decisions should always be verified with official
+                university resources and academic advisors.
+            </p>
+        </article>
+    </div>
+</section>

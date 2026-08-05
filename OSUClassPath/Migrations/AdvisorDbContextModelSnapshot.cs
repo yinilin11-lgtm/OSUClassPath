@@ -56,6 +56,78 @@ namespace OSUClassPath.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("OSUClassPath.Models.RecommendedPlanItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CourseCode")
+                        .HasMaxLength(30)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Credits")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ItemType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(300)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("RecommendedPlanTermId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(160)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecommendedPlanTermId", "SortOrder")
+                        .IsUnique();
+
+                    b.ToTable("RecommendedPlanItems");
+                });
+
+            modelBuilder.Entity("OSUClassPath.Models.RecommendedPlanTerm", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("RecommendedCredits")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("TermName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("YearNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SortOrder")
+                        .IsUnique();
+
+                    b.ToTable("RecommendedPlanTerms");
+                });
+
             modelBuilder.Entity("OSUClassPath.Models.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -118,6 +190,17 @@ namespace OSUClassPath.Migrations
                     b.ToTable("StudentCourses");
                 });
 
+            modelBuilder.Entity("OSUClassPath.Models.RecommendedPlanItem", b =>
+                {
+                    b.HasOne("OSUClassPath.Models.RecommendedPlanTerm", "RecommendedPlanTerm")
+                        .WithMany("Items")
+                        .HasForeignKey("RecommendedPlanTermId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RecommendedPlanTerm");
+                });
+
             modelBuilder.Entity("OSUClassPath.Models.StudentCourse", b =>
                 {
                     b.HasOne("OSUClassPath.Models.Course", "Course")
@@ -135,6 +218,11 @@ namespace OSUClassPath.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("OSUClassPath.Models.RecommendedPlanTerm", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

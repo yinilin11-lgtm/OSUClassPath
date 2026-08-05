@@ -1,36 +1,76 @@
 @{
-    ViewData["Title"] = "AI 課程助理";
+    ViewData["Title"] = "AI Course Advisor";
 }
 
-<section class="agent-shell">
-    <div class="agent-header">
-        <div>
-            <p class="agent-kicker">C# API + JavaScript Frontend</p>
-            <h1>OSUClassPath AI Agent</h1>
+<section class="agent-page">
+    <div class="agent-hero">
+        <div class="agent-hero-copy">
+            <span class="agent-eyebrow">OSU CoursePath AI Advisor</span>
+            <h1>Ask course planning questions with AI support</h1>
             <p>
-                你可以詢問課程內容、學分、先修條件，或請它幫你規劃修課方向。
+                This chat interface connects a JavaScript frontend with an ASP.NET Core backend and
+                Gemini API integration to help students reason through course information and planning questions.
             </p>
         </div>
-        <span class="agent-status" id="agentStatus">Ready</span>
-    </div>
 
-    <div class="agent-chat" id="agentMessages" aria-live="polite">
-        <div class="agent-message agent-message-assistant">
-            <div class="agent-avatar">AI</div>
-            <div class="agent-bubble">
-                嗨，我是你的課程 AI agent。你可以問我像是「CSE 2221 需要什麼先修？」或「我想走軟體工程方向，該怎麼排課？」
+        <div class="agent-hero-panel">
+            <div>
+                <span class="agent-panel-label">Backend</span>
+                <strong>C# ASP.NET API</strong>
+            </div>
+            <div>
+                <span class="agent-panel-label">Frontend</span>
+                <strong>JavaScript Chat UI</strong>
+            </div>
+            <div>
+                <span class="agent-panel-label">Status</span>
+                <strong id="agentStatus">Ready</strong>
             </div>
         </div>
     </div>
 
-    <form class="agent-composer" id="agentForm">
-        <label class="visually-hidden" for="agentInput">輸入問題</label>
-        <textarea id="agentInput"
-                  rows="2"
-                  placeholder="輸入你的問題，例如：CSE 2221 是什麼？"
-                  required></textarea>
-        <button type="submit" id="agentSubmit">送出</button>
-    </form>
+    <div class="agent-workspace">
+        <aside class="agent-sidebar" aria-label="Suggested questions">
+            <h2>Suggested questions</h2>
+            <button type="button" class="agent-suggestion" data-agent-question="What is CSE 2221 about?">
+                What is CSE 2221 about?
+            </button>
+            <button type="button" class="agent-suggestion" data-agent-question="What are the prerequisites for CSE 2221?">
+                What are the prerequisites for CSE 2221?
+            </button>
+            <button type="button" class="agent-suggestion" data-agent-question="Which courses should I consider for my next term?">
+                Which courses should I consider for my next term?
+            </button>
+        </aside>
+
+        <div class="agent-card">
+            <div class="agent-card-header">
+                <div>
+                    <h2>Course advisor chat</h2>
+                    <p>Ask about course descriptions, prerequisites, academic plans, and student course progress.</p>
+                </div>
+                <span class="agent-live-dot" aria-hidden="true"></span>
+            </div>
+
+            <div class="agent-chat" id="agentMessages" aria-live="polite">
+                <div class="agent-message agent-message-assistant">
+                    <div class="agent-avatar">AI</div>
+                    <div class="agent-bubble">
+                        Hi, I am the OSU CoursePath AI advisor. Ask me about course information, prerequisites, or planning ideas based on the available course data.
+                    </div>
+                </div>
+            </div>
+
+            <form class="agent-composer" id="agentForm">
+                <label class="visually-hidden" for="agentInput">Enter your question</label>
+                <textarea id="agentInput"
+                          rows="2"
+                          placeholder="Ask a course question, such as: What is CSE 2221 about?"
+                          required></textarea>
+                <button type="submit" id="agentSubmit">Send</button>
+            </form>
+        </div>
+    </div>
 </section>
 
 @section Scripts {
