@@ -22,7 +22,7 @@ This repository is named `OSUClassPath`, but the project is presented as **OSU C
 
 - C#
 - ASP.NET Core MVC
-- Razor Pages / Views
+- Razor Views
 - JavaScript
 - HTML / CSS
 - Bootstrap
@@ -37,6 +37,37 @@ This repository is named `OSUClassPath`, but the project is presented as **OSU C
 - Stores course and student planning data in a local SQLite database
 - Connects a JavaScript chat interface to a C# backend API
 - Demonstrates AI integration in an education-focused application
+
+## Project Structure
+
+- `OSUClassPath/Controllers/` - Handles web requests and application logic
+- `OSUClassPath/Models/` - Defines course, student, and student-course data models
+- `OSUClassPath/Views/` - Razor views for the web interface
+- `OSUClassPath/Data/` - Entity Framework database context
+- `OSUClassPath/Migrations/` - Database migration files
+- `OSUClassPath/wwwroot/` - Static assets such as CSS and JavaScript
+
+## Getting Started
+
+### Prerequisites
+
+- .NET SDK 10.0 or later
+- Visual Studio 2026 or later
+
+### Run Locally
+
+Clone the repository:
+
+```bash
+git clone https://github.com/yinilin11-lgtm/OSUClassPath.git
+cd OSUClassPath
+```
+
+Run the application:
+
+```bash
+dotnet run --project OSUClassPath/OSUClassPath.csproj
+```
 
 ## Future Improvements
 
