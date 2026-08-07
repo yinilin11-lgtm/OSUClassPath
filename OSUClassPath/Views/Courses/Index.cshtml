@@ -1,18 +1,53 @@
 @model IEnumerable<OSUClassPath.Models.Course>
 @using Microsoft.AspNetCore.Mvc.Rendering
+@using static CoursesController
 
 @{
     ViewData["Title"] = "Courses";
     var categories = ViewData["Categories"] as SelectList;
     var tracks = ViewData["Tracks"] as SelectList;
+    var totalCourses = ViewData["TotalCourses"];
+    var technicalElectives = ViewData["TechnicalElectives"];
+    var trackCount = ViewData["TrackCount"];
+    var featuredTracks = ViewData["FeaturedTracks"] as IEnumerable<TrackSummary> ?? [];
 }
 
 <div class="course-page">
-    <div class="section-heading">
-        <span class="section-label">Course catalog</span>
-        <h1>OSU CSE Curriculum Courses</h1>
-        <p>Search and filter courses by degree category or technical elective track.</p>
-    </div>
+    <section class="course-hero">
+        <div>
+            <span class="section-label">Course explorer</span>
+            <h1>Pick a CSE path by interest</h1>
+            <p>
+                Browse the non-GE OSU CSE curriculum without staring at a giant requirement sheet.
+                Start with a track, then open the details only when a course looks useful.
+            </p>
+        </div>
+        <div class="course-stats" aria-label="Course dataset summary">
+            <div>
+                <span>Total courses</span>
+                <strong>@totalCourses</strong>
+            </div>
+            <div>
+                <span>Electives</span>
+                <strong>@technicalElectives</strong>
+            </div>
+            <div>
+                <span>Tracks</span>
+                <strong>@trackCount</strong>
+            </div>
+        </div>
+    </section>
+
+    <section class="track-strip" aria-label="Technical elective tracks">
+        @foreach (var track in featuredTracks)
+        {
+            <a class="track-card track-@Slug(track.TrackName)" asp-action="Index" asp-route-track="@track.TrackName">
+                <span>@TrackIcon(track.TrackName)</span>
+                <strong>@track.TrackName</strong>
+                <small>@track.CourseCount courses</small>
+            </a>
+        }
+    </section>
 
     <form asp-action="Index" method="get" class="course-filters">
         <div>
@@ -22,7 +57,7 @@
                    name="searchString"
                    value="@ViewData["CurrentFilter"]"
                    class="form-control"
-                   placeholder="Course code, title, category, or track" />
+                   placeholder="Try AI, game, CSE 5523, security..." />
         </div>
 
         <div>
@@ -40,50 +75,73 @@
         </div>
 
         <div class="course-filter-actions">
-            <button type="submit" class="btn btn-primary">Filter</button>
+            <button type="submit" class="btn btn-primary">Explore</button>
             <a asp-action="Index" class="btn btn-outline-secondary">Reset</a>
         </div>
     </form>
 
     <div class="course-toolbar">
-        <strong>@Model.Count() courses</strong>
+        <div>
+            <span class="course-result-label">Showing</span>
+            <strong>@Model.Count() courses</strong>
+        </div>
         <a asp-action="Create" class="btn btn-outline-primary btn-sm">Create New</a>
     </div>
 
-    <div class="table-responsive course-table-wrap">
-        <table class="table align-middle course-table">
-            <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.CourseCode)</th>
-                    <th>@Html.DisplayNameFor(model => model.Category)</th>
-                    <th>@Html.DisplayNameFor(model => model.Track)</th>
-                    <th>@Html.DisplayNameFor(model => model.Title)</th>
-                    <th>@Html.DisplayNameFor(model => model.Credits)</th>
-                    <th>@Html.DisplayNameFor(model => model.PrerequisiteText)</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td><strong>@Html.DisplayFor(model => item.CourseCode)</strong></td>
-                        <td>@Html.DisplayFor(model => item.Category)</td>
-                        <td>@Html.DisplayFor(model => item.Track)</td>
-                        <td>
-                            <div class="course-title">@Html.DisplayFor(model => item.Title)</div>
-                            <div class="course-description">@Html.DisplayFor(model => item.Description)</div>
-                        </td>
-                        <td>@Html.DisplayFor(model => item.Credits)</td>
-                        <td class="course-prereq">@Html.DisplayFor(model => item.PrerequisiteText)</td>
-                        <td class="course-row-actions">
-                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+    <section class="course-card-grid" aria-label="Course results">
+        @foreach (var item in Model)
+        {
+            <article class="course-card">
+                <div class="course-card-top">
+                    <span class="course-code">@item.CourseCode</span>
+                    <span class="credit-chip">@item.Credits credits</span>
+                </div>
+
+                <h2>@item.Title</h2>
+
+                <div class="course-chip-row">
+                    <span class="course-pill course-pill-category">@item.Category</span>
+                    @if (!string.IsNullOrWhiteSpace(item.Track))
+                    {
+                        <span class="course-pill course-pill-track">@item.Track</span>
+                    }
+                </div>
+
+                <p>@item.Description</p>
+
+                <div class="course-card-actions">
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </div>
+            </article>
+        }
+    </section>
 </div>
+
+@functions {
+    private static string TrackIcon(string track)
+    {
+        return track switch
+        {
+            "Artificial Intelligence" => "AI",
+            "Game / Graphics" => "GG",
+            "Security" => "SC",
+            "Database / Data" => "DB",
+            "Software Engineering" => "SE",
+            "Networking" => "NW",
+            "Systems" => "SY",
+            "Theory / Algorithms" => "TH",
+            "Math / Statistics" => "MS",
+            "Science" => "SN",
+            _ => "CS"
+        };
+    }
+
+    private static string Slug(string value)
+    {
+        return value.ToLowerInvariant()
+            .Replace(" / ", "-")
+            .Replace(" ", "-");
+    }
+}

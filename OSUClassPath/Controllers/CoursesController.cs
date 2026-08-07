@@ -42,6 +42,20 @@ public class CoursesController : Controller
         ViewData["CurrentFilter"] = searchString;
         ViewData["CurrentCategory"] = category;
         ViewData["CurrentTrack"] = track;
+        ViewData["TotalCourses"] = await _context.Courses.CountAsync();
+        ViewData["TechnicalElectives"] = await _context.Courses.CountAsync(course => course.Category == "CSE Technical Elective");
+        ViewData["TrackCount"] = await _context.Courses
+            .Where(course => course.Track != "")
+            .Select(course => course.Track)
+            .Distinct()
+            .CountAsync();
+        ViewData["FeaturedTracks"] = await _context.Courses
+            .AsNoTracking()
+            .Where(course => course.Track != "")
+            .GroupBy(course => course.Track)
+            .Select(group => new TrackSummary(group.Key, group.Count()))
+            .OrderBy(summary => summary.TrackName)
+            .ToListAsync();
         ViewData["Categories"] = new SelectList(await _context.Courses
             .AsNoTracking()
             .Where(course => course.Category != "")
@@ -190,4 +204,6 @@ public class CoursesController : Controller
     {
         return _context.Courses.Any(e => e.Id == id);
     }
+
+    public sealed record TrackSummary(string TrackName, int CourseCount);
 }
