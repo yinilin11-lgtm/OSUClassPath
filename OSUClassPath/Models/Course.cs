@@ -11,6 +11,14 @@ public class Course
     [Display(Name = "課程代碼")]
     public string CourseCode { get; set; } = string.Empty;
 
+    [StringLength(100)]
+    [Display(Name = "分類")]
+    public string Category { get; set; } = string.Empty;
+
+    [StringLength(100)]
+    [Display(Name = "方向")]
+    public string Track { get; set; } = string.Empty;
+
     [Required]
     [StringLength(200)]
     [Display(Name = "課程名稱")]

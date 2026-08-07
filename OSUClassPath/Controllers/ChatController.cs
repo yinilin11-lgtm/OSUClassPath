@@ -85,9 +85,10 @@ public class ChatController : Controller
         var usedContext = courseContext != NoCourseContext || scheduleContext != NoScheduleContext;
 
         var systemPrompt =
-            "You are an AI course planning agent for the OSUClassPath ASP.NET app. " +
+            "You are an AI course planning agent for the OSU CoursePath ASP.NET app. " +
             "Answer in Traditional Chinese by default. Be concise, practical, and friendly. " +
-            "Use the provided course catalog and recommended schedule context when relevant. " +
+            "Use the provided course catalog categories and tracks when relevant. " +
+            "Explain whether a course is a core requirement, core choice, capstone, math/science elective, or CSE technical elective. " +
             "Treat GE entries as overall General Education placeholders, not specific course recommendations. " +
             "If the context is not enough, say what information is missing.";
 
@@ -273,6 +274,9 @@ public class ChatController : Controller
         }
         else
         {
+            var trackHints = GetTrackHints(normalizedMessage);
+            var categoryHints = GetCategoryHints(normalizedMessage);
+
             var keywords = Regex.Matches(normalizedMessage, @"[A-Z0-9]{3,}")
                 .Select(match => match.Value)
                 .Where(keyword => keyword is not ("THE" or "AND" or "FOR" or "WITH"))
@@ -286,13 +290,18 @@ public class ChatController : Controller
                 .ToListAsync(cancellationToken);
 
             courses = allCourses
-                .Where(course => keywords.Count == 0
-                    || keywords.Any(keyword =>
-                        course.CourseCode.Contains(keyword, StringComparison.OrdinalIgnoreCase)
-                        || course.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase)
-                        || course.Description.Contains(keyword, StringComparison.OrdinalIgnoreCase)
-                        || course.PrerequisiteText.Contains(keyword, StringComparison.OrdinalIgnoreCase)))
-                .Take(8)
+                .Where(course =>
+                    (trackHints.Count == 0 || trackHints.Contains(course.Track))
+                    && (categoryHints.Count == 0 || categoryHints.Contains(course.Category))
+                    && (keywords.Count == 0
+                        || keywords.Any(keyword =>
+                            course.CourseCode.Contains(keyword, StringComparison.OrdinalIgnoreCase)
+                            || course.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase)
+                            || course.Category.Contains(keyword, StringComparison.OrdinalIgnoreCase)
+                            || course.Track.Contains(keyword, StringComparison.OrdinalIgnoreCase)
+                            || course.Description.Contains(keyword, StringComparison.OrdinalIgnoreCase)
+                            || course.PrerequisiteText.Contains(keyword, StringComparison.OrdinalIgnoreCase))))
+                .Take(trackHints.Count > 0 || categoryHints.Count > 0 ? 15 : 8)
                 .ToList();
         }
 
@@ -306,6 +315,8 @@ public class ChatController : Controller
         foreach (var course in courses)
         {
             contextBuilder.AppendLine($"- {course.CourseCode}: {course.Title}");
+            contextBuilder.AppendLine($"  Category: {course.Category}");
+            contextBuilder.AppendLine($"  Track: {course.Track}");
             contextBuilder.AppendLine($"  Credits: {course.Credits}");
             contextBuilder.AppendLine($"  Description: {course.Description}");
             contextBuilder.AppendLine($"  Prerequisites: {course.PrerequisiteText}");
@@ -313,6 +324,45 @@ public class ChatController : Controller
         }
 
         return contextBuilder.ToString();
+    }
+
+    private static List<string> GetTrackHints(string normalizedMessage)
+    {
+        var hints = new List<string>();
+
+        AddHint(hints, normalizedMessage, "Artificial Intelligence", "AI", "ARTIFICIAL", "MACHINE", "LEARNING", "NEURAL", "VISION", "NLP");
+        AddHint(hints, normalizedMessage, "Game / Graphics", "GAME", "GAMING", "GRAPHICS", "ANIMATION", "RENDERING", "VISUALIZATION", "VR", "VIRTUAL");
+        AddHint(hints, normalizedMessage, "Security", "SECURITY", "CYBER", "CRYPTO", "MALWARE", "HACK");
+        AddHint(hints, normalizedMessage, "Database / Data", "DATABASE", "DATA", "MINING", "CLOUD");
+        AddHint(hints, normalizedMessage, "Software Engineering", "SOFTWARE", "WEB", "MOBILE", "APP", "ENTERPRISE");
+        AddHint(hints, normalizedMessage, "Networking", "NETWORK", "WIRELESS", "INTERNET");
+        AddHint(hints, normalizedMessage, "Systems", "SYSTEM", "SYSTEMS", "OS", "OPERATING", "ARCHITECTURE", "PARALLEL", "COMPILER");
+        AddHint(hints, normalizedMessage, "Theory / Algorithms", "THEORY", "ALGORITHM", "AUTOMATA", "FORMAL");
+        AddHint(hints, normalizedMessage, "Math / Statistics", "MATH", "STAT", "STATISTICS");
+        AddHint(hints, normalizedMessage, "Science", "SCIENCE", "BIOLOGY", "CHEM", "PHYSICS", "EARTH", "ENVIRONMENT");
+
+        return hints;
+    }
+
+    private static List<string> GetCategoryHints(string normalizedMessage)
+    {
+        var hints = new List<string>();
+
+        AddHint(hints, normalizedMessage, "CSE Technical Elective", "TECHNICAL ELECTIVE", "ELECTIVE", "TRACK");
+        AddHint(hints, normalizedMessage, "Computer Science Core", "CORE", "REQUIRED");
+        AddHint(hints, normalizedMessage, "Computer Science Core Choices", "CORE CHOICE", "CAPSTONE");
+        AddHint(hints, normalizedMessage, "CSE Math and Science Electives", "MATH", "SCIENCE");
+        AddHint(hints, normalizedMessage, "Non-Computer Science Core", "NON-CSE", "ECE");
+
+        return hints;
+    }
+
+    private static void AddHint(List<string> hints, string message, string value, params string[] tokens)
+    {
+        if (tokens.Any(token => message.Contains(token, StringComparison.OrdinalIgnoreCase)) && !hints.Contains(value))
+        {
+            hints.Add(value);
+        }
     }
 
     private async Task<string> BuildScheduleContextAsync(CancellationToken cancellationToken)

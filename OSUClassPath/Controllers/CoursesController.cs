@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using OSUClassPath.Models;
 using OSUClassPath.Data;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 public class CoursesController : Controller
 {
@@ -15,7 +16,7 @@ public class CoursesController : Controller
     }
 
     // GET: COURSES
-    public async Task<IActionResult> Index(string? searchString)
+    public async Task<IActionResult> Index(string? searchString, string? category, string? track)
     {
         var courses = _context.Courses.AsQueryable();
 
@@ -23,10 +24,38 @@ public class CoursesController : Controller
         {
             courses = courses.Where(course =>
                 course.CourseCode.Contains(searchString) ||
-                course.Title.Contains(searchString));
+                course.Title.Contains(searchString) ||
+                course.Category.Contains(searchString) ||
+                course.Track.Contains(searchString));
+        }
+
+        if (!string.IsNullOrWhiteSpace(category))
+        {
+            courses = courses.Where(course => course.Category == category);
+        }
+
+        if (!string.IsNullOrWhiteSpace(track))
+        {
+            courses = courses.Where(course => course.Track == track);
         }
 
         ViewData["CurrentFilter"] = searchString;
+        ViewData["CurrentCategory"] = category;
+        ViewData["CurrentTrack"] = track;
+        ViewData["Categories"] = new SelectList(await _context.Courses
+            .AsNoTracking()
+            .Where(course => course.Category != "")
+            .Select(course => course.Category)
+            .Distinct()
+            .OrderBy(value => value)
+            .ToListAsync(), category);
+        ViewData["Tracks"] = new SelectList(await _context.Courses
+            .AsNoTracking()
+            .Where(course => course.Track != "")
+            .Select(course => course.Track)
+            .Distinct()
+            .OrderBy(value => value)
+            .ToListAsync(), track);
 
         return View(await courses
             .OrderBy(course => course.CourseCode)
@@ -62,7 +91,7 @@ public class CoursesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,CourseCode,Title,Description,Credits,PrerequisiteText,SourceUrl,LastVerified")] Course course)
+    public async Task<IActionResult> Create([Bind("Id,CourseCode,Category,Track,Title,Description,Credits,PrerequisiteText,SourceUrl,LastVerified")] Course course)
     {
         if (ModelState.IsValid)
         {
@@ -94,7 +123,7 @@ public class CoursesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,CourseCode,Title,Description,Credits,PrerequisiteText,SourceUrl,LastVerified")] Course course)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,CourseCode,Category,Track,Title,Description,Credits,PrerequisiteText,SourceUrl,LastVerified")] Course course)
     {
         if (id != course.Id)
         {

@@ -1,86 +1,89 @@
 @model IEnumerable<OSUClassPath.Models.Course>
+@using Microsoft.AspNetCore.Mvc.Rendering
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Courses";
+    var categories = ViewData["Categories"] as SelectList;
+    var tracks = ViewData["Tracks"] as SelectList;
 }
 
-<h1>課程列表</h1>
-
-<form asp-action="Index" method="get" class="row g-2 mb-4">
-    <div class="col-md-6">
-        <input type="text"
-               name="searchString"
-               value="@ViewData["CurrentFilter"]"
-               class="form-control"
-               placeholder="輸入課程代碼或名稱，例如 CSE 2221" />
+<div class="course-page">
+    <div class="section-heading">
+        <span class="section-label">Course catalog</span>
+        <h1>OSU CSE Curriculum Courses</h1>
+        <p>Search and filter courses by degree category or technical elective track.</p>
     </div>
 
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary">搜尋</button>
-        <a asp-action="Index" class="btn btn-outline-secondary">清除</a>
-    </div>
-</form>
+    <form asp-action="Index" method="get" class="course-filters">
+        <div>
+            <label class="form-label" for="searchString">Search</label>
+            <input id="searchString"
+                   type="text"
+                   name="searchString"
+                   value="@ViewData["CurrentFilter"]"
+                   class="form-control"
+                   placeholder="Course code, title, category, or track" />
+        </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CourseCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Credits)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PrerequisiteText)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SourceUrl)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastVerified)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.CourseCode)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Credits)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.PrerequisiteText)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.SourceUrl)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.LastVerified)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        <div>
+            <label class="form-label" for="category">Category</label>
+            <select id="category" name="category" class="form-select" asp-items="categories">
+                <option value="">All categories</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="form-label" for="track">Track</label>
+            <select id="track" name="track" class="form-select" asp-items="tracks">
+                <option value="">All tracks</option>
+            </select>
+        </div>
+
+        <div class="course-filter-actions">
+            <button type="submit" class="btn btn-primary">Filter</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Reset</a>
+        </div>
+    </form>
+
+    <div class="course-toolbar">
+        <strong>@Model.Count() courses</strong>
+        <a asp-action="Create" class="btn btn-outline-primary btn-sm">Create New</a>
+    </div>
+
+    <div class="table-responsive course-table-wrap">
+        <table class="table align-middle course-table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.CourseCode)</th>
+                    <th>@Html.DisplayNameFor(model => model.Category)</th>
+                    <th>@Html.DisplayNameFor(model => model.Track)</th>
+                    <th>@Html.DisplayNameFor(model => model.Title)</th>
+                    <th>@Html.DisplayNameFor(model => model.Credits)</th>
+                    <th>@Html.DisplayNameFor(model => model.PrerequisiteText)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><strong>@Html.DisplayFor(model => item.CourseCode)</strong></td>
+                        <td>@Html.DisplayFor(model => item.Category)</td>
+                        <td>@Html.DisplayFor(model => item.Track)</td>
+                        <td>
+                            <div class="course-title">@Html.DisplayFor(model => item.Title)</div>
+                            <div class="course-description">@Html.DisplayFor(model => item.Description)</div>
+                        </td>
+                        <td>@Html.DisplayFor(model => item.Credits)</td>
+                        <td class="course-prereq">@Html.DisplayFor(model => item.PrerequisiteText)</td>
+                        <td class="course-row-actions">
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

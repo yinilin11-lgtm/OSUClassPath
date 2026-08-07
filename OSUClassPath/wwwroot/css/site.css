@@ -214,6 +214,76 @@ body {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.course-page {
+  margin: 0 auto 2.5rem;
+  max-width: 1280px;
+}
+
+.course-filters {
+  align-items: end;
+  background: white;
+  border: 1px solid #dbe3ef;
+  border-radius: 8px;
+  box-shadow: 0 12px 32px rgba(28, 44, 74, .08);
+  display: grid;
+  gap: .85rem;
+  grid-template-columns: minmax(220px, 1.4fr) minmax(190px, 1fr) minmax(190px, 1fr) auto;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.course-filter-actions {
+  display: flex;
+  gap: .5rem;
+}
+
+.course-toolbar {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: .75rem 0;
+}
+
+.course-table-wrap {
+  background: white;
+  border: 1px solid #dbe3ef;
+  border-radius: 8px;
+  box-shadow: 0 12px 32px rgba(28, 44, 74, .08);
+}
+
+.course-table {
+  margin: 0;
+}
+
+.course-table th {
+  color: #4d5f7a;
+  font-size: .78rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.course-title {
+  font-weight: 750;
+}
+
+.course-description,
+.course-prereq {
+  color: #667289;
+  font-size: .88rem;
+  line-height: 1.5;
+  max-width: 420px;
+}
+
+.course-row-actions {
+  white-space: nowrap;
+}
+
+.course-row-actions a {
+  font-weight: 650;
+  margin-right: .5rem;
+  text-decoration: none;
+}
+
 .btn:focus,
 .btn:active:focus,
 .btn-link.nav-link:focus,

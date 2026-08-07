@@ -41,7 +41,7 @@ async function sendMessage(message) {
     input.value = "";
     setLoading(true);
 
-    const pendingMessage = appendMessage("assistant", "正在整理課程資料並詢問 AI...");
+    const pendingMessage = appendMessage("assistant", "Checking the local course database...");
 
     try {
         const response = await fetch("/api/course-advisor/chat", {
@@ -55,17 +55,17 @@ async function sendMessage(message) {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.detail || data.title || "AI agent request failed.");
+            throw new Error(data.detail || data.title || "AI advisor request failed.");
         }
 
         const contextNote = data.usedCourseContext
             ? ""
-            : "\n\n補充：這次沒有找到直接相關的本機資料，所以回答主要來自模型推論。";
+            : "\n\nNote: I could not find matching local course records, so this answer may need manual verification.";
 
         pendingMessage.querySelector(".agent-bubble").textContent = `${data.answer}${contextNote}`;
     } catch (error) {
         pendingMessage.querySelector(".agent-bubble").textContent =
-            `目前無法取得 AI 回覆：${error.message}`;
+            `I could not reach the AI advisor: ${error.message}`;
     } finally {
         setLoading(false);
         input.focus();

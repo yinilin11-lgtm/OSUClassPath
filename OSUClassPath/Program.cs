@@ -17,6 +17,7 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AdvisorDbContext>();
     dbContext.Database.Migrate();
+    await CourseSeeder.SeedAsync(dbContext, app.Environment);
 }
 
 // Configure the HTTP request pipeline.
