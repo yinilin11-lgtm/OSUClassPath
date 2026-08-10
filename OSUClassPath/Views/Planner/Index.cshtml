@@ -1,0 +1,64 @@
+@model OSUClassPath.Models.PlannerIndexViewModel
+@using System.Text.Json
+
+@{
+    ViewData["Title"] = "Planner";
+    var plannerData = JsonSerializer.Serialize(new
+    {
+        courses = Model.Courses,
+        terms = Model.Terms
+    });
+}
+
+<div class="planner-page">
+    <section class="course-hero planner-hero">
+        <div>
+            <span class="section-label" data-i18n="plannerEyebrow">Degree planner</span>
+            <h1 data-i18n="plannerTitle">Build a semester plan before registration week gets dramatic</h1>
+            <p data-i18n="plannerCopy">
+                Start from the BS CSE sample schedule, add or move courses by semester, and check credit totals plus basic prerequisite warnings.
+            </p>
+        </div>
+        <div class="planner-summary" aria-label="Planner summary">
+            <div>
+                <span data-i18n="plannerTotalCredits">Total credits</span>
+                <strong id="plannerTotalCredits">0</strong>
+            </div>
+            <div>
+                <span data-i18n="plannerWarnings">Warnings</span>
+                <strong id="plannerWarningCount">0</strong>
+            </div>
+        </div>
+    </section>
+
+    <section class="planner-tools">
+        <div>
+            <label class="form-label" for="plannerCourseSearch" data-i18n="plannerAddCourse">Add a course</label>
+            <input id="plannerCourseSearch"
+                   class="form-control"
+                   list="plannerCourseOptions"
+                   placeholder="Search CSE 2231, AI, software..."
+                   data-i18n-placeholder="plannerSearchPlaceholder" />
+            <datalist id="plannerCourseOptions"></datalist>
+        </div>
+        <div>
+            <label class="form-label" for="plannerTermSelect" data-i18n="plannerChooseTerm">Term</label>
+            <select id="plannerTermSelect" class="form-select"></select>
+        </div>
+        <div class="planner-tool-actions">
+            <button type="button" class="btn btn-primary" id="plannerAddButton" data-i18n="plannerAddButton">Add</button>
+            <button type="button" class="btn btn-outline-secondary" id="plannerResetButton" data-i18n="plannerResetButton">Reset sample</button>
+        </div>
+    </section>
+
+    <section class="planner-alerts" id="plannerAlerts" aria-live="polite"></section>
+
+    <section class="planner-grid" id="plannerGrid" aria-label="Semester planner"></section>
+</div>
+
+@section Scripts {
+    <script>
+        window.osuPlannerData = @Html.Raw(plannerData);
+    </script>
+    <script src="~/js/planner.js" asp-append-version="true"></script>
+}

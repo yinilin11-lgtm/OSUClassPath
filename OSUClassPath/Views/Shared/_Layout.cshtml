@@ -35,6 +35,9 @@
                             <a class="nav-link text-dark" href="/Chat" data-i18n="navAdvisor">Course Advisor</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" href="/Planner" data-i18n="navPlanner">Planner</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" href="/Home/Privacy" data-i18n="navAbout">About</a>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
@@ -87,7 +90,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2026 - OSU CoursePath - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2026 - OSU CoursePath - <a asp-area="" asp-controller="Home" asp-action="Privacy">About</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

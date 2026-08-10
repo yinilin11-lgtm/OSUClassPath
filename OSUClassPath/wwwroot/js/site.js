@@ -3,6 +3,7 @@ const siteTranslations = {
         navHome: "Home",
         navCourses: "Courses",
         navAdvisor: "Course Advisor",
+        navPlanner: "Planner",
         navPrivacy: "Privacy",
         navAbout: "About",
         navAdmin: "Admin",
@@ -110,12 +111,23 @@ const siteTranslations = {
         account: "Account",
         displayName: "Display Name",
         savedCourses: "Saved Courses",
-        viewCourses: "View courses"
+        viewCourses: "View courses",
+        plannerEyebrow: "Degree planner",
+        plannerTitle: "Build a semester plan before registration week gets dramatic",
+        plannerCopy: "Start from the BS CSE sample schedule, add or move courses by semester, and check credit totals plus basic prerequisite warnings.",
+        plannerTotalCredits: "Total credits",
+        plannerWarnings: "Warnings",
+        plannerAddCourse: "Add a course",
+        plannerSearchPlaceholder: "Search CSE 2231, AI, software...",
+        plannerChooseTerm: "Term",
+        plannerAddButton: "Add",
+        plannerResetButton: "Reset sample"
     },
     zh: {
         navHome: "\u4e3b\u9801",
         navCourses: "\u8ab2\u7a0b",
         navAdvisor: "\u8ab2\u7a0b\u52a9\u7406",
+        navPlanner: "\u4fee\u8ab2\u898f\u5283",
         navPrivacy: "\u96b1\u79c1",
         navAbout: "\u95dc\u65bc",
         navAdmin: "\u5f8c\u53f0",
@@ -223,7 +235,17 @@ const siteTranslations = {
         account: "\u5e33\u865f",
         displayName: "\u986f\u793a\u540d\u7a31",
         savedCourses: "\u5132\u5b58\u8ab2\u7a0b",
-        viewCourses: "\u67e5\u770b\u8ab2\u7a0b"
+        viewCourses: "\u67e5\u770b\u8ab2\u7a0b",
+        plannerEyebrow: "\u5b78\u4f4d\u898f\u5283",
+        plannerTitle: "\u5148\u6392\u597d\u6bcf\u5b78\u671f\u8ab2\u7a0b\uff0c\u9078\u8ab2\u9031\u5c31\u4e0d\u6703\u592a\u7126\u616e",
+        plannerCopy: "\u5f9e BS CSE \u5efa\u8b70\u8ab2\u8868\u958b\u59cb\uff0c\u628a\u8ab2\u7a0b\u52a0\u5230\u4e0d\u540c\u5b78\u671f\uff0c\u4e26\u6aa2\u67e5\u5b78\u5206\u7e3d\u8a08\u8207\u57fa\u672c\u64cb\u4fee\u63d0\u9192\u3002",
+        plannerTotalCredits: "\u7e3d\u5b78\u5206",
+        plannerWarnings: "\u63d0\u9192",
+        plannerAddCourse: "\u65b0\u589e\u8ab2\u7a0b",
+        plannerSearchPlaceholder: "\u641c\u5c0b CSE 2231\u3001AI\u3001software...",
+        plannerChooseTerm: "\u5b78\u671f",
+        plannerAddButton: "\u65b0\u589e",
+        plannerResetButton: "\u91cd\u8a2d\u5efa\u8b70\u8ab2\u8868"
     }
 };
 
