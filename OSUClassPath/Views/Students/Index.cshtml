@@ -1,59 +1,48 @@
 @model IEnumerable<OSUClassPath.Models.Student>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Students";
 }
 
-<h1>Index</h1>
+<section class="info-page">
+    <div class="section-heading">
+        <span class="section-label" data-i18n="studentsEyebrow">Student profiles</span>
+        <h1 data-i18n="studentsTitle">Students</h1>
+        <p data-i18n="studentsCopy">Manage simple student records for course planning and advising demonstrations.</p>
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Program)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CatalogYear)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartingTerm)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PreferredCredits)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+    <p>
+        <a class="btn btn-primary" asp-action="Create" data-i18n="createNew">Create New</a>
+    </p>
+
+    <div class="data-card">
+    <table class="table data-table">
+        <thead>
+            <tr>
+                <th data-i18n="studentName">Name</th>
+                <th data-i18n="studentProgram">Program</th>
+                <th data-i18n="studentCatalogYear">Catalog Year</th>
+                <th data-i18n="studentStartingTerm">Starting Term</th>
+                <th data-i18n="studentPreferredCredits">Preferred Credits</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Program)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.CatalogYear)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.StartingTerm)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.PreferredCredits)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+            <tr>
+                <td>@Html.DisplayFor(model => item.Name)</td>
+                <td>@Html.DisplayFor(model => item.Program)</td>
+                <td>@Html.DisplayFor(model => item.CatalogYear)</td>
+                <td>@Html.DisplayFor(model => item.StartingTerm)</td>
+                <td>@Html.DisplayFor(model => item.PreferredCredits)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" data-i18n="edit">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" data-i18n="details">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" data-i18n="delete">Delete</a>
+                </td>
+            </tr>
 }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+    </div>
+</section>

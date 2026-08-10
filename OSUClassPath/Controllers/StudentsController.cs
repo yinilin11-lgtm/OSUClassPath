@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OSUClassPath.Models;
 using OSUClassPath.Data;
+using OSUClassPath.Filters;
 
+[AdminOnly]
 public class StudentsController : Controller
 {
     private readonly AdvisorDbContext _context;

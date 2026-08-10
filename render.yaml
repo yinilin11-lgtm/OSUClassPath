@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: osu-coursepath
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ConnectionStrings__AdvisorDatabase
+        value: Data Source=/app/osu-class-path.db
+      - key: Gemini__Model
+        value: gemini-3.5-flash
+      - key: Admin__Password
+        sync: false
+      - key: Gemini__ApiKey
+        sync: false

@@ -1,74 +1,24 @@
 @model OSUClassPath.Models.StudentCourse
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Remove Course";
 }
 
-<h1>Delete</h1>
+<section class="info-page">
+    <div class="section-heading">
+        <span class="section-label" data-i18n="studentCoursesEyebrow">Course tracking</span>
+        <h1 data-i18n="removeCourseTitle">Remove course</h1>
+        <p data-i18n="removeCourseCopy">Remove this course from your personal workspace?</p>
+    </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Student Course</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StudentId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StudentId)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Student)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Student)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CourseId)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CourseId)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Course)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Course)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Term)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Term)
-        </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Grade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Grade)
-        </dd>
-    </dl>
-    <form asp-action="Delete">
+    <div class="data-card">
+        <strong>@Model.Course?.CourseCode</strong>
+        <p class="mb-0">@Model.Course?.Title</p>
+    </div>
+
+    <form asp-action="Delete" class="home-actions">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <button type="submit" class="btn btn-danger" data-i18n="delete">Delete</button>
+        <a asp-action="Index" class="btn btn-outline-primary" data-i18n="backToList">Back to list</a>
     </form>
-</div>
+</section>

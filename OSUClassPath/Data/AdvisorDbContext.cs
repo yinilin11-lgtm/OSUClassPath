@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OSUClassPath.Models;
 
 namespace OSUClassPath.Data;
 
-public class AdvisorDbContext : DbContext
+public class AdvisorDbContext : IdentityDbContext<ApplicationUser>
 {
     public AdvisorDbContext(DbContextOptions<AdvisorDbContext> options)
         : base(options)
@@ -19,6 +20,10 @@ public class AdvisorDbContext : DbContext
     public DbSet<RecommendedPlanTerm> RecommendedPlanTerms => Set<RecommendedPlanTerm>();
 
     public DbSet<RecommendedPlanItem> RecommendedPlanItems => Set<RecommendedPlanItem>();
+
+    public DbSet<ChatSession> ChatSessions => Set<ChatSession>();
+
+    public DbSet<ChatMessage> ChatMessages => Set<ChatMessage>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -37,5 +42,23 @@ public class AdvisorDbContext : DbContext
         modelBuilder.Entity<RecommendedPlanItem>()
             .HasIndex(item => new { item.RecommendedPlanTermId, item.SortOrder })
             .IsUnique();
+
+        modelBuilder.Entity<StudentCourse>()
+            .HasOne(record => record.User)
+            .WithMany()
+            .HasForeignKey(record => record.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<ChatSession>()
+            .HasOne(session => session.User)
+            .WithMany()
+            .HasForeignKey(session => session.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<ChatMessage>()
+            .HasOne(message => message.ChatSession)
+            .WithMany(session => session.Messages)
+            .HasForeignKey(message => message.ChatSessionId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

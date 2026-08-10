@@ -21,8 +21,12 @@ public class StudentCourse
 {
     public int Id { get; set; }
 
+    public string? UserId { get; set; }
+
+    public ApplicationUser? User { get; set; }
+
     [Display(Name = "學生")]
-    public int StudentId { get; set; }
+    public int? StudentId { get; set; }
 
     public Student? Student { get; set; }
 

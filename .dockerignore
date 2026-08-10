@@ -1,0 +1,14 @@
+**/.git
+**/.vs
+**/.agents
+**/.codex-build
+**/bin
+**/obj
+**/*.user
+**/*.suo
+**/*.db
+**/*.db-shm
+**/*.db-wal
+**/*.log
+README.md
+docs

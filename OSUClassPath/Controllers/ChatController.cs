@@ -14,6 +14,7 @@ public class ChatController : Controller
 {
     private const string NoCourseContext = "No matching course records found.";
     private const string NoScheduleContext = "No recommended schedule records found.";
+    private const string NoProgramContext = "No BS CSE program requirement records found.";
 
     private readonly AdvisorDbContext _context;
     private readonly IConfiguration _configuration;
@@ -80,21 +81,34 @@ public class ChatController : Controller
         }
 
         var model = _configuration["Gemini:Model"] ?? "gemini-3.5-flash";
-        var courseContext = await BuildCourseContextAsync(request.Message, cancellationToken);
+        var conversationContext = BuildConversationContext(request.History);
+        var courseContext = await BuildCourseContextAsync($"{conversationContext}\n{request.Message}", cancellationToken);
         var scheduleContext = await BuildScheduleContextAsync(cancellationToken);
-        var usedContext = courseContext != NoCourseContext || scheduleContext != NoScheduleContext;
+        var programContext = await BuildProgramContextAsync(cancellationToken);
+        var missingCourseGuidance = BuildMissingCourseGuidance(courseContext);
+        var usedContext = courseContext != NoCourseContext
+            || scheduleContext != NoScheduleContext
+            || programContext != NoProgramContext;
 
         var systemPrompt =
             "You are an AI course planning agent for the OSU CoursePath ASP.NET app. " +
             "Answer in Traditional Chinese by default. Be concise, practical, and friendly. " +
             "Use the provided course catalog categories and tracks when relevant. " +
+            "Use the provided BS CSE program requirement context for degree-credit and department background questions. " +
+            "Do not add every available course option together as if all options are required. " +
             "Explain whether a course is a core requirement, core choice, capstone, math/science elective, or CSE technical elective. " +
             "Treat GE entries as overall General Education placeholders, not specific course recommendations. " +
-            "If the context is not enough, say what information is missing.";
+            "If a course is not found in the local database, do not guess course details. " +
+            "Explain that the local catalog may not include every OSU course, provide the official OSU CSE course catalog link when relevant, " +
+            "and offer to help interpret degree requirements or possible category fit using the available program rules. " +
+            "If the context is not enough, say what information is missing in a helpful way.";
 
         var userPrompt =
+            $"Recent conversation:\n{conversationContext}\n\n" +
             $"Course context from the local database:\n{courseContext}\n\n" +
+            $"Local catalog fallback guidance:\n{missingCourseGuidance}\n\n" +
             $"Recommended schedule context:\n{scheduleContext}\n\n" +
+            $"BS CSE program requirement and department context:\n{programContext}\n\n" +
             $"Student question:\n{request.Message.Trim()}";
 
         try
@@ -276,6 +290,8 @@ public class ChatController : Controller
         {
             var trackHints = GetTrackHints(normalizedMessage);
             var categoryHints = GetCategoryHints(normalizedMessage);
+            var levelHints = GetCourseLevelHints(normalizedMessage);
+            var hasStructuredHints = trackHints.Count > 0 || categoryHints.Count > 0 || levelHints.Count > 0;
 
             var keywords = Regex.Matches(normalizedMessage, @"[A-Z0-9]{3,}")
                 .Select(match => match.Value)
@@ -293,7 +309,9 @@ public class ChatController : Controller
                 .Where(course =>
                     (trackHints.Count == 0 || trackHints.Contains(course.Track))
                     && (categoryHints.Count == 0 || categoryHints.Contains(course.Category))
-                    && (keywords.Count == 0
+                    && (levelHints.Count == 0 || MatchesCourseLevel(course.CourseCode, levelHints))
+                    && (hasStructuredHints
+                        || keywords.Count == 0
                         || keywords.Any(keyword =>
                             course.CourseCode.Contains(keyword, StringComparison.OrdinalIgnoreCase)
                             || course.Title.Contains(keyword, StringComparison.OrdinalIgnoreCase)
@@ -301,7 +319,7 @@ public class ChatController : Controller
                             || course.Track.Contains(keyword, StringComparison.OrdinalIgnoreCase)
                             || course.Description.Contains(keyword, StringComparison.OrdinalIgnoreCase)
                             || course.PrerequisiteText.Contains(keyword, StringComparison.OrdinalIgnoreCase))))
-                .Take(trackHints.Count > 0 || categoryHints.Count > 0 ? 15 : 8)
+                .Take(hasStructuredHints ? 20 : 8)
                 .ToList();
         }
 
@@ -324,6 +342,81 @@ public class ChatController : Controller
         }
 
         return contextBuilder.ToString();
+    }
+
+    private static List<int> GetCourseLevelHints(string normalizedMessage)
+    {
+        var levels = new List<int>();
+
+        foreach (Match match in Regex.Matches(normalizedMessage, @"\b([3-5])(?:000|XXX)\b"))
+        {
+            if (int.TryParse(match.Groups[1].Value, out var level) && !levels.Contains(level))
+            {
+                levels.Add(level);
+            }
+        }
+
+        return levels;
+    }
+
+    private static bool MatchesCourseLevel(string courseCode, IReadOnlyCollection<int> levels)
+    {
+        var match = Regex.Match(courseCode, @"\b(\d{4})");
+        if (!match.Success || !int.TryParse(match.Groups[1].Value, out var courseNumber))
+        {
+            return false;
+        }
+
+        return levels.Contains(courseNumber / 1000);
+    }
+
+    private static string BuildConversationContext(IReadOnlyList<ChatHistoryMessage>? history)
+    {
+        if (history is null || history.Count == 0)
+        {
+            return "No previous conversation in this browser session.";
+        }
+
+        var contextBuilder = new StringBuilder();
+
+        foreach (var message in history.TakeLast(10))
+        {
+            if (string.IsNullOrWhiteSpace(message.Content))
+            {
+                continue;
+            }
+
+            var role = message.Role.Equals("assistant", StringComparison.OrdinalIgnoreCase)
+                ? "Assistant"
+                : "Student";
+            var content = message.Content.Trim();
+
+            if (content.Length > 900)
+            {
+                content = content[..900] + "...";
+            }
+
+            contextBuilder.AppendLine($"{role}: {content}");
+        }
+
+        return contextBuilder.Length == 0
+            ? "No previous conversation in this browser session."
+            : contextBuilder.ToString();
+    }
+
+    private static string BuildMissingCourseGuidance(string courseContext)
+    {
+        if (courseContext != NoCourseContext)
+        {
+            return "Local course records were found. Use them as the primary source for course-specific details.";
+        }
+
+        return
+            "No matching local course record was found. This does not mean the course does not exist at OSU. " +
+            "The local catalog focuses on BS CSE core, core choices, math/science electives, technical elective candidates, and related planning data. " +
+            "When answering, say that the course is not in the local OSU CoursePath catalog yet, avoid inventing title/credits/prerequisites, " +
+            "and suggest checking the official OSU CSE course catalog: https://cse.osu.edu/courses. " +
+            "If the student is asking whether it may count toward BS CSE requirements, use the program requirement rules to explain what would need to be verified.";
     }
 
     private static List<string> GetTrackHints(string normalizedMessage)
@@ -405,9 +498,160 @@ public class ChatController : Controller
         return contextBuilder.ToString();
     }
 
-    public sealed record ChatRequest(string Message);
+    private async Task<string> BuildProgramContextAsync(CancellationToken cancellationToken)
+    {
+        var seedPath = Path.Combine(_environment.ContentRootPath, "Data", "CseProgramRequirements.json");
+
+        if (!System.IO.File.Exists(seedPath))
+        {
+            return NoProgramContext;
+        }
+
+        try
+        {
+            await using var stream = System.IO.File.OpenRead(seedPath);
+            var program = await JsonSerializer.DeserializeAsync<CseProgramRequirementContext>(
+                stream,
+                new JsonSerializerOptions { PropertyNameCaseInsensitive = true },
+                cancellationToken);
+
+            if (program is null)
+            {
+                return NoProgramContext;
+            }
+
+            var contextBuilder = new StringBuilder();
+            contextBuilder.AppendLine($"{program.ShortName}: {program.ProgramName}");
+            contextBuilder.AppendLine($"Institution: {program.Institution}");
+            contextBuilder.AppendLine($"College: {program.College}");
+            contextBuilder.AppendLine($"Department: {program.Department}");
+            contextBuilder.AppendLine($"Last verified: {program.LastVerified}");
+
+            if (program.Background.Count > 0)
+            {
+                contextBuilder.AppendLine("Department/program background:");
+                foreach (var item in program.Background)
+                {
+                    contextBuilder.AppendLine($"- {item}");
+                }
+            }
+
+            if (program.Requirements.Count > 0)
+            {
+                contextBuilder.AppendLine("Degree requirement summary:");
+                foreach (var requirement in program.Requirements)
+                {
+                    contextBuilder.AppendLine($"- {requirement.Name}: {requirement.RequiredCredits} required credits.");
+                    contextBuilder.AppendLine($"  Description: {requirement.Description}");
+
+                    if (requirement.MinimumCseCredits is not null)
+                    {
+                        contextBuilder.AppendLine($"  Minimum CSE credits: {requirement.MinimumCseCredits}");
+                    }
+
+                    foreach (var note in requirement.Notes)
+                    {
+                        contextBuilder.AppendLine($"  Note: {note}");
+                    }
+                }
+            }
+
+            if (program.CoreChoiceGroups.Count > 0)
+            {
+                contextBuilder.AppendLine("CSE core choice groups:");
+                foreach (var group in program.CoreChoiceGroups)
+                {
+                    contextBuilder.AppendLine($"- {group.Name}: choose {group.Choose} from {string.Join(", ", group.Courses)}.");
+                }
+            }
+
+            if (program.TechnicalElectiveRules.Count > 0)
+            {
+                contextBuilder.AppendLine("Technical elective rules:");
+                foreach (var rule in program.TechnicalElectiveRules)
+                {
+                    contextBuilder.AppendLine($"- {rule}");
+                }
+            }
+
+            if (program.SpecializationOptions.Count > 0)
+            {
+                contextBuilder.AppendLine("Specialization options:");
+                foreach (var option in program.SpecializationOptions)
+                {
+                    contextBuilder.AppendLine($"- {option.Name}: {option.Summary}");
+
+                    foreach (var requirement in option.Requirements)
+                    {
+                        contextBuilder.AppendLine($"  Requirement/note: {requirement}");
+                    }
+                }
+            }
+
+            if (program.AdvisingNotes.Count > 0)
+            {
+                contextBuilder.AppendLine("Advising notes:");
+                foreach (var note in program.AdvisingNotes)
+                {
+                    contextBuilder.AppendLine($"- {note}");
+                }
+            }
+
+            if (program.Sources.Count > 0)
+            {
+                contextBuilder.AppendLine("Sources:");
+                foreach (var source in program.Sources)
+                {
+                    contextBuilder.AppendLine($"- {source}");
+                }
+            }
+
+            return contextBuilder.ToString();
+        }
+        catch (JsonException exception)
+        {
+            _logger.LogWarning(exception, "BS CSE program requirement seed file could not be parsed.");
+            return NoProgramContext;
+        }
+    }
+
+    public sealed record ChatRequest(string Message, IReadOnlyList<ChatHistoryMessage>? History = null);
+
+    public sealed record ChatHistoryMessage(string Role, string Content);
 
     public sealed record ChatResponse(string Answer, string Model);
 
     public sealed record AgentChatResponse(string Answer, string Model, bool UsedCourseContext);
+
+    private sealed record CseProgramRequirementContext(
+        string ProgramName,
+        string ShortName,
+        string Institution,
+        string College,
+        string Department,
+        string LastVerified,
+        IReadOnlyList<string> Sources,
+        IReadOnlyList<string> Background,
+        IReadOnlyList<CseProgramRequirement> Requirements,
+        IReadOnlyList<CseCoreChoiceGroup> CoreChoiceGroups,
+        IReadOnlyList<string> TechnicalElectiveRules,
+        IReadOnlyList<CseSpecializationOption> SpecializationOptions,
+        IReadOnlyList<string> AdvisingNotes);
+
+    private sealed record CseProgramRequirement(
+        string Name,
+        int RequiredCredits,
+        string Description,
+        int? MinimumCseCredits,
+        IReadOnlyList<string> Notes);
+
+    private sealed record CseCoreChoiceGroup(
+        string Name,
+        int Choose,
+        IReadOnlyList<string> Courses);
+
+    private sealed record CseSpecializationOption(
+        string Name,
+        string Summary,
+        IReadOnlyList<string> Requirements);
 }

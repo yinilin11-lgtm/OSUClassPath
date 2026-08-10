@@ -4,77 +4,69 @@
 
 <section class="home-hero">
     <div class="home-hero-copy">
-        <span class="section-label">AI-powered course information assistant</span>
+        <span class="section-label" data-i18n="homeEyebrow">AI-powered course information assistant</span>
         <h1>OSU CoursePath</h1>
-        <p>
+        <p data-i18n="homeHeroCopy">
             An AI-powered course information assistant designed for Ohio State University students.
-            Explore structured course data, manage student profiles, track selected classes, and ask
-            an AI advisor for academic planning support.
+            Explore structured course data, save courses to a personal workspace, and ask an AI advisor
+            for academic planning support.
         </p>
         <div class="home-actions">
-            <a class="btn btn-primary" asp-controller="Chat" asp-action="Index">Open Course Advisor</a>
-            <a class="btn btn-outline-primary" asp-controller="Courses" asp-action="Index">Browse Courses</a>
-        </div>
-    </div>
-    <div class="home-status">
-        <div>
-            <span class="status-label">Framework</span>
-            <strong>ASP.NET Core MVC</strong>
-        </div>
-        <div>
-            <span class="status-label">Database</span>
-            <strong>SQLite + EF Core</strong>
-        </div>
-        <div>
-            <span class="status-label">AI Workflow</span>
-            <strong>Gemini API integration</strong>
+            <a class="btn btn-primary" asp-controller="Chat" asp-action="Index" data-i18n="homeOpenAdvisor">Open Course Advisor</a>
+            <a class="btn btn-outline-primary" asp-controller="Courses" asp-action="Index" data-i18n="homeBrowseCourses">Browse Courses</a>
         </div>
     </div>
 </section>
 
 <section class="home-section">
     <div class="section-heading">
-        <span class="section-label">What it does</span>
-        <h2>Explore, manage, and understand course paths</h2>
+        <span class="section-label" data-i18n="homeWhatItDoes">What it does</span>
+        <h2 data-i18n="homeExploreTitle">Browse, save, and understand course paths</h2>
     </div>
-    <div class="feature-grid">
-        <article class="feature-card">
-            <h3>Course Catalog</h3>
-            <p>Search structured course records, including course codes, credits, descriptions, prerequisites, and source links.</p>
-            <a asp-controller="Courses" asp-action="Index">View courses</a>
-        </article>
-        <article class="feature-card">
-            <h3>Student Profiles</h3>
-            <p>Create student records with program details, catalog year, starting term, and preferred credit load.</p>
-            <a asp-controller="Students" asp-action="Index">View students</a>
-        </article>
-        <article class="feature-card">
-            <h3>Course Tracking</h3>
-            <p>Connect students with selected courses to support a simple advising and planning workflow.</p>
-            <a asp-controller="StudentCourses" asp-action="Index">View student courses</a>
-        </article>
-        <article class="feature-card">
-            <h3>AI Course Advisor</h3>
-            <p>Ask course planning questions and receive responses grounded in local course and schedule data.</p>
-            <a asp-controller="Chat" asp-action="Index">Ask the advisor</a>
-        </article>
-    </div>
-</section>
 
-<section class="home-section home-split">
-    <div>
-        <span class="section-label">Technical highlights</span>
-        <h2>Built as a full-stack academic advising portfolio project</h2>
-        <p>
-            The project demonstrates MVC routing, Razor views, controller actions, Entity Framework migrations,
-            SQLite persistence, client-side JavaScript, and an external AI API integration.
-        </p>
+    <div class="home-showcase-grid">
+        <article class="home-showcase-card">
+            <div class="home-card-preview preview-catalog">
+                <span>CSE 2221</span>
+                <span>CSE 3521</span>
+                <span>CSE 5523</span>
+            </div>
+            <h3 data-i18n="homeCatalogTitle">Course Catalog</h3>
+            <p data-i18n="homeCatalogCopy">Search structured course records, including course codes, credits, descriptions, prerequisites, and source links.</p>
+            <a asp-controller="Courses" asp-action="Index" data-i18n="homeViewCourses">View courses</a>
+        </article>
+
+        <article class="home-showcase-card">
+            <div class="home-card-preview preview-workspace">
+                <span>Planned</span>
+                <span>Interested</span>
+                <span>Completed</span>
+            </div>
+            <h3 data-i18n="homeProfilesTitle">Personal Workspace</h3>
+            <p data-i18n="homeProfilesCopy">Create an account to save courses and keep your own planning workspace separate from other users.</p>
+            <a asp-controller="Account" asp-action="Register" data-i18n="createAccount">Create account</a>
+        </article>
+
+        <article class="home-showcase-card">
+            <div class="home-card-preview preview-plan">
+                <span>AI</span>
+                <span>Security</span>
+                <span>Systems</span>
+            </div>
+            <h3 data-i18n="homeTrackingTitle">Course Tracking</h3>
+            <p data-i18n="homeTrackingCopy">Save selected courses, mark planning status, and build a lightweight personal course list.</p>
+            <a asp-controller="StudentCourses" asp-action="Index" data-i18n="homeViewStudentCourses">View my courses</a>
+        </article>
+
+        <article class="home-showcase-card">
+            <div class="home-card-preview preview-advisor">
+                <span>Prereqs</span>
+                <span>Tracks</span>
+                <span>Requirements</span>
+            </div>
+            <h3 data-i18n="homeAdvisorTitle">AI Course Advisor</h3>
+            <p data-i18n="homeAdvisorCopy">Ask course planning questions and receive responses grounded in local course and schedule data.</p>
+            <a asp-controller="Chat" asp-action="Index" data-i18n="homeAskAdvisor">Ask the advisor</a>
+        </article>
     </div>
-    <ul class="tech-list">
-        <li>C# and ASP.NET Core MVC</li>
-        <li>Entity Framework Core migrations</li>
-        <li>SQLite local database</li>
-        <li>Razor views with Bootstrap styling</li>
-        <li>Gemini API-backed chat workflow</li>
-    </ul>
 </section>

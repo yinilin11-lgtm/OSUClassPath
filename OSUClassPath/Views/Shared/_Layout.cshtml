@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Identity
+@using OSUClassPath.Models
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -13,7 +18,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OSU CoursePath</a>
+                <a class="navbar-brand" href="/">OSU CoursePath</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -21,24 +26,55 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">主頁</a>
+                            <a class="nav-link text-dark" href="/" data-i18n="navHome">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Courses" asp-action="Index">課程</a>
+                            <a class="nav-link text-dark" href="/Courses" data-i18n="navCourses">Courses</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="Index">課程助理</a>
+                            <a class="nav-link text-dark" href="/Chat" data-i18n="navAdvisor">Course Advisor</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Students" asp-action="Index">學生資料</a>
+                            <a class="nav-link text-dark" href="/Home/Privacy" data-i18n="navAbout">About</a>
                         </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/StudentCourses" data-i18n="navMyCourses">My Courses</a>
+                            </li>
+                        }
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="StudentCourses" asp-action="Index">我的課程</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">隱私</a>
+                            <a class="nav-link text-dark" href="/Admin/Login" data-i18n="navAdmin">Admin</a>
                         </li>
                     </ul>
+
+                    <ul class="navbar-nav account-nav">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <span class="nav-link text-dark account-name">@UserManager.GetUserName(User)</span>
+                            </li>
+                            <li class="nav-item">
+                                <form asp-controller="Account" asp-action="Logout" method="post">
+                                    <button type="submit" class="nav-link text-dark nav-button" data-i18n="logout">Logout</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/Account/Login" data-i18n="loginButton">Log in</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/Account/Register" data-i18n="createAccount">Create account</a>
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="language-toggle nav-language-toggle" aria-label="Language">
+                        <button type="button" class="active" data-agent-language="en">EN</button>
+                        <button type="button" data-agent-language="zh">中文</button>
+                    </div>
                 </div>
             </div>
         </nav>

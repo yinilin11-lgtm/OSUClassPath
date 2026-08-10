@@ -1,0 +1,42 @@
+@model OSUClassPath.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<section class="info-page auth-page">
+    <div class="section-heading">
+        <span class="section-label" data-i18n="loginEyebrow">Personal workspace</span>
+        <h1 data-i18n="loginTitle">Log in</h1>
+        <p data-i18n="loginCopy">Log in to save courses, keep planning progress, and continue your advising workspace.</p>
+    </div>
+
+    <div class="admin-login-card">
+        <form asp-action="Login" method="post">
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <label class="form-label" asp-for="Email"></label>
+            <input class="form-control" asp-for="Email" autocomplete="email" />
+            <span class="text-danger" asp-validation-for="Email"></span>
+
+            <label class="form-label" asp-for="Password"></label>
+            <input class="form-control" asp-for="Password" autocomplete="current-password" />
+            <span class="text-danger" asp-validation-for="Password"></span>
+
+            <label class="form-check">
+                <input class="form-check-input" asp-for="RememberMe" />
+                <span data-i18n="rememberMe">Remember me</span>
+            </label>
+
+            <div class="auth-actions">
+                <button class="btn btn-primary" type="submit" data-i18n="loginButton">Log in</button>
+                <a class="btn btn-outline-primary" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" data-i18n="createAccount">Create account</a>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

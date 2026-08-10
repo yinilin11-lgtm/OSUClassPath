@@ -5,6 +5,7 @@ using OSUClassPath.Models;
 using OSUClassPath.Data;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using OSUClassPath.Filters;
 
 public class CoursesController : Controller
 {
@@ -49,13 +50,18 @@ public class CoursesController : Controller
             .Select(course => course.Track)
             .Distinct()
             .CountAsync();
-        ViewData["FeaturedTracks"] = await _context.Courses
+        var featuredTracks = await _context.Courses
             .AsNoTracking()
             .Where(course => course.Track != "")
             .GroupBy(course => course.Track)
-            .Select(group => new TrackSummary(group.Key, group.Count()))
+            .Select(group => new { TrackName = group.Key, CourseCount = group.Count() })
             .OrderBy(summary => summary.TrackName)
             .ToListAsync();
+
+        ViewData["FeaturedTracks"] = featuredTracks
+            .Select(summary => new TrackSummary(summary.TrackName, summary.CourseCount))
+            .ToList();
+
         ViewData["Categories"] = new SelectList(await _context.Courses
             .AsNoTracking()
             .Where(course => course.Category != "")
@@ -95,6 +101,7 @@ public class CoursesController : Controller
     }
 
     // GET: COURSES/Create
+    [AdminOnly]
     public IActionResult Create()
     {
         return View();
@@ -105,6 +112,7 @@ public class CoursesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [AdminOnly]
     public async Task<IActionResult> Create([Bind("Id,CourseCode,Category,Track,Title,Description,Credits,PrerequisiteText,SourceUrl,LastVerified")] Course course)
     {
         if (ModelState.IsValid)
@@ -117,6 +125,7 @@ public class CoursesController : Controller
     }
 
     // GET: COURSES/Edit/5
+    [AdminOnly]
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -137,6 +146,7 @@ public class CoursesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [AdminOnly]
     public async Task<IActionResult> Edit(int? id, [Bind("Id,CourseCode,Category,Track,Title,Description,Credits,PrerequisiteText,SourceUrl,LastVerified")] Course course)
     {
         if (id != course.Id)
@@ -168,6 +178,7 @@ public class CoursesController : Controller
     }
 
     // GET: COURSES/Delete/5
+    [AdminOnly]
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -188,6 +199,7 @@ public class CoursesController : Controller
     // POST: COURSES/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [AdminOnly]
     public async Task<IActionResult> DeleteConfirmed(int? id)
     {
         var course = await _context.Courses.FindAsync(id);

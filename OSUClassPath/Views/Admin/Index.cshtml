@@ -1,0 +1,43 @@
+@model IEnumerable<OSUClassPath.Models.AdminUserSummaryViewModel>
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<section class="info-page">
+    <div class="section-heading">
+        <span class="section-label" data-i18n="adminDashboardEyebrow">Private area</span>
+        <h1 data-i18n="adminDashboardTitle">Admin Dashboard</h1>
+        <p data-i18n="adminDashboardCopy">Review registered users and their saved course counts. Passwords are never shown.</p>
+    </div>
+
+    <div class="data-card">
+        <table class="table data-table">
+            <thead>
+                <tr>
+                    <th data-i18n="account">Account</th>
+                    <th data-i18n="displayName">Display Name</th>
+                    <th data-i18n="studentProgram">Program</th>
+                    <th data-i18n="studentCatalogYear">Catalog Year</th>
+                    <th data-i18n="savedCourses">Saved Courses</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+@foreach (var user in Model)
+{
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@user.DisplayName</td>
+                    <td>@user.Program</td>
+                    <td>@user.CatalogYear</td>
+                    <td>@user.SavedCourseCount</td>
+                    <td>
+                        <a asp-action="UserCourses" asp-route-id="@user.UserId" data-i18n="viewCourses">View courses</a>
+                    </td>
+                </tr>
+}
+            </tbody>
+        </table>
+    </div>
+</section>

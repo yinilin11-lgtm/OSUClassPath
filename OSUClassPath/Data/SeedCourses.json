@@ -6,7 +6,7 @@
     "Title": "Introduction to Physical Anthropology",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "No prerequisite listed.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -17,7 +17,7 @@
     "Title": "Biological Sciences: Energy Transfer and Development",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: Math 1120, 1130, 1148, 1150, or above, or Math Placement Level L or M. Prereq or concur: Chem 1110, 1208, 1210, 1610, or 1910H, or permission of course coordinator. Not open to students with credit for 1113 or 1113.02.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -28,7 +28,7 @@
     "Title": "Biological Sciences: Form, Function, Diversity, and Ecology",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: Math 1120, 1130, 1148, or 1150 or above, or Math Placement Level L or M. Prereq or concur: Chem 1110, 1208, 1210, 1610, or 1910H, or permission of course coordinator. Not open to students with credit for 1114 or 1114.02.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -39,7 +39,7 @@
     "Title": "General Chemistry I",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 5,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: One unit of high school chemistry, and Math Placement Level L or M; or a grade of C- or above in Math 1120, 1130, 1131, 1148, 1150, or above. Not open to students with credit for 1220, 1620, 1920H, 1250, 1610, or 1910H.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -50,7 +50,7 @@
     "Title": "General Chemistry for Engineers",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: One unit of high school chemistry, and Math Placement Level L or M; or a grade of C- or above in Math 1120, 1130, 1131, 1148, 1150, or above. Not open to students with credit for 1210, 1220, 1610, 1620, 1910H, or 1920H.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -61,7 +61,7 @@
     "Title": "Introduction to Computer Programming in Java",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Sample Schedule Additional Course.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: Math 1116, 1130, 1148, 1150, or 1151, or Math Placement Level L. Not open to students with credit for 1222 or 1224.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -72,7 +72,7 @@
     "Title": "Software I: Software Components",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 1212, 1221, 1222, 1223, 1224, Engr 1221, 1281.01H, 1281.02H, or CSE Placement Level A. Prereq or concur: Math 1151, 1161.01, or 1161.02. Not open to students with credit for 5022.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -83,7 +83,7 @@
     "Title": "Software II: Software Development and Design",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2221. Concur: 2321. Not open to students with credit for 2231.01.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -94,7 +94,7 @@
     "Title": "Foundations I: Discrete Structures",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2122, 2123, or 2221; and Math 1151, or 1161. Concur (for students with credit for 2221): 2231.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -105,7 +105,7 @@
     "Title": "Foundations II: Data Structures and Algorithms",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2231, 2321, and Stat 3460 or 3470, and enrollment in CSE, CIS, ECE, Data Analytics, Math majors or CS minor. Concur: Math 3345. Not open to students with credit for 5331.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -116,7 +116,7 @@
     "Title": "Systems I: Introduction to Low-Level Programming and Computer Organization",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2122, 2123, or 2231; and 2321; and enrollment in CSE, CIS, Data Analytics, Music (BS), Engineering Physics, or Math major. Not open to students with credit for 5042.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -127,7 +127,7 @@
     "Title": "Systems II: Introduction to Operating Systems",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2421 or 3430, and enrollment in CSE, CIS, ECE, or Data Analytics major. Not open to students with credit for 5431.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -138,7 +138,7 @@
     "Title": "Social, Ethical, and Professional Issues in Computing",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core.",
     "Credits": 1,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2122, 2123, or 2231; and GE writing and communication level 2 or GE foundation writing and information literacy; and enrollment in CSE or CIS major, Information Security minor, or Grad standing. Not open to students with credit for 5501.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -149,7 +149,7 @@
     "Title": "Software Engineering Techniques",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 3901 or 3902 or 3903. Not open to students with credit for 5231.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -171,7 +171,7 @@
     "Title": "Introduction to Database Systems",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2123 or 2231; and 2321, or 2111 and Math 2366; and enrollment in CSE, CIS, ISE, Data Analytics, ECE, Engineering Physics, Business Information Systems major, or CS minor. Not open to students with credit for 5241.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -193,7 +193,7 @@
     "Title": "Automata and Formal Languages",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2231, 2421, 2331, and Math 3345; and enrollment in CSE, CIS, ECE, or Math major. Not open to students with credit for 5321.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -204,7 +204,7 @@
     "Title": "Principles of Programming Languages",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2231, 2331, and 2421, and 3901, 3902, or 3903. Not open to students with credit for 5341.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -215,7 +215,7 @@
     "Title": "Introduction to Computer Architecture",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2231, and 2421 or ECE 2560, and ECE 2060; and enrollment in CSE, CIS, or ECE major. Not open to students with credit for 5421.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -226,7 +226,7 @@
     "Title": "Computer Networking and Internet Technologies",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2421; or 3430; or 2451 and ECE 2560; and enrollment in CIS, CSE, ECE, Engineering Physics, or Data Analytics major. Prereq or concur: 2431 or 3430. Not open to students with credit for 5461.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -237,7 +237,7 @@
     "Title": "Survey of Artificial Intelligence I: Basic Techniques",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2331 or 5331; and Math 2174, 2568, 4568, or 5520H; and Stat 3201, 3450, 3460, 3470, 4201, Math 4530, or 5530H; and enrollment in CSE, CIS, ECE, or Data Analytics major. Not open to students with credit for 5521.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -248,7 +248,7 @@
     "Title": "Computer Game and Animation Techniques",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 3901, 3902, or 3903; and enrollment in CSE, CIS, Music (BS), or ECE major. Not open to students with credit for 5541.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -259,7 +259,7 @@
     "Title": "Project: Design, Development, and Documentation of Web Applications",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2231; and 2321; and 2421 or 3430, or 2451 and ECE 2560; and enrollment in CSE, CIS, ECE, or Data Analytics major.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -270,7 +270,7 @@
     "Title": "Project: Design, Development, and Documentation of Interactive Systems",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2231; and 2321; and 2421 or 3430, or 2451 and ECE 2560; and enrollment in CSE, CIS, ECE, Music (BS), or Data Analytics major.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -281,7 +281,7 @@
     "Title": "Project: Design, Development, and Documentation of System Software",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2231; and 2321; and 2421 or 3430, or 2451 and ECE 2560; and enrollment in CSE, CIS, ECE, or Data Analytics major.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1117,7 +1117,7 @@
     "Title": "Capstone Design: Software Applications",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 3231 or 5231; and 2501, Philos 1338, or Philos 2338; and CSE 3901, 3902, or 3903; and GenEd 1201 or 2601; and GE writing and communication level 2 or GE foundation writing and information literacy; or Grad standing.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1128,7 +1128,7 @@
     "Title": "Capstone Design: Game Design and Development",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 3541 or 5541; and 2501, Philos 1338, or Philos 2338; and CSE 3901, 3902, or 3903; and GenEd 1201 or 2601; and GE writing and communication level 2 or GE foundation writing and information literacy; or Grad standing.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1139,7 +1139,7 @@
     "Title": "Capstone Design: Computer Animation",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 3541 or 5541; and 2501, Philos 1338, or Philos 2338; and CSE 3901, 3902, or 3903; and GE writing and communication level 2 or GE foundation writing and information literacy; or Grad standing.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1150,7 +1150,7 @@
     "Title": "Capstone Design: Knowledge-Based Systems",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 3521 or 5521; and 2501, Philos 1338, or Philos 2338; and CSE 3901, 3902, or 3903; and GenEd 1201 or 2601; and GE writing and communication level 2 or GE foundation writing and information literacy; or Grad standing.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1161,7 +1161,7 @@
     "Title": "Capstone Design: Information Systems",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 3241 or 5241; and 2501, Philos 1338, or Philos 2338; and CSE 3901, 3902, or 3903; and GenEd 1201 or 2601; and GE writing and communication level 2 or GE foundation writing and information literacy; or Grad standing.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1172,7 +1172,7 @@
     "Title": "Capstone Design: Research-Focused Projects",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core Choices.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2501, Philos 1338, or Philos 2338; and CSE 3901, 3902, or 3903; and GenEd 1201 or 2601; and GE writing and communication level 2 or GE foundation writing and information literacy; or Grad standing.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1183,7 +1183,7 @@
     "Title": "The Dynamic Earth",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "No prerequisite listed.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1194,7 +1194,7 @@
     "Title": "Earth Through Time",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "No prerequisite listed.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1205,7 +1205,7 @@
     "Title": "Introduction to Analog Systems and Circuits",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Non-Computer Science Core.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: Math 1152, 1161.01, 1161.02, 1172, or 1181H; and Physics 1250, 1250H, 1260, Chem 1210, or Chem 1250. Not open to students with credit for 2100, 2100.02, 2100.06, 2100.07, 2100.08, 2105, 2106, 2110, 2127, 2137, 2300, or 2360.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1216,7 +1216,7 @@
     "Title": "Introduction to Digital Logic",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Non-Computer Science Core.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: Math 1148 or 1151. Not open to students with credit for 2000, 2000.02, 2000.07, 2001, 2010, or 2017.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1227,7 +1227,7 @@
     "Title": "Introduction to Ohio State and Computer Science and Engineering",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under General College of Engineering Requirements.",
     "Credits": 1,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "No prerequisite listed.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1238,7 +1238,7 @@
     "Title": "Fundamentals of Engineering I",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under General College of Engineering Requirements.",
     "Credits": 2,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq or concur: Math 1151, 1161.01, 1161.02, 1172, 1181H, or higher-level Math placement as required by the College of Engineering.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1249,7 +1249,7 @@
     "Title": "Fundamentals of Engineering II",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under General College of Engineering Requirements.",
     "Credits": 2,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: ENGR 1181, 1181.01, 1181.02, 1181.03, 1181.04, 1281.01H, 1281.02H, or 1281.03H; or permission of department.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1260,7 +1260,7 @@
     "Title": "Introduction to Environmental Science",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "No prerequisite listed.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1271,7 +1271,7 @@
     "Title": "Soil Science",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "No prerequisite listed.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1282,7 +1282,7 @@
     "Title": "Soil Science Laboratory",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 1,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq or concur: ENR 3000, or permission of instructor.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1293,7 +1293,7 @@
     "Title": "The Science of Food",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: Biology 1101 or 1113.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1304,7 +1304,7 @@
     "Title": "Ecology of Managed Plant Systems",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "No prerequisite listed.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1315,7 +1315,7 @@
     "Title": "Form and Function in Cultivated Plants",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "No prerequisite listed.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1326,7 +1326,7 @@
     "Title": "Calculus I",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under General College of Engineering Requirements.",
     "Credits": 5,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: Math Placement Level L, or a grade of C- or better in Math 1150, both Math 1148 and 1149, or equivalent. Not open to students with credit for any higher numbered Math class.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1337,7 +1337,7 @@
     "Title": "Engineering Mathematics A",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under General College of Engineering Requirements.",
     "Credits": 5,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: A grade of C- or above in 1114, 1151, 1156, 1161.xx, 152.xx, 161.xx, or 161.01H. Not open to students with credit for 1152, 1534, 1544, or any Math course numbered 1172 or above.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1348,7 +1348,7 @@
     "Title": "Calculus III",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: A grade of C- or above in 1152, 1172, 1534, 1544, 1181H, or 4181H, or credit for 153.xx, 154, 162.xx, or 162.01H. Not open to students with credit for any course 2153 or above.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1359,7 +1359,7 @@
     "Title": "Differential Equations and Their Applications",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: A grade of C- or above in 2153, 2162.xx, 2173, 2182H, or 4182H, or credit for 254.xx, 263.xx, 263.01H, or 264H. Not open to students with credit for 2415, 5520H, 255, 415.xx, or 521H.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1370,7 +1370,7 @@
     "Title": "Ordinary and Partial Differential Equations",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: 2153, 2162.xx, 2173, 2182H, 4182H, 254.xx, 263.xx, 263.01H, or 264H; or 2568 and either 1172 or 1544. Not open to students with credit for 2255, 5520H, 2174, or 415.xx.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1381,7 +1381,7 @@
     "Title": "Linear Algebra",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Non-Computer Science Core.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: A grade of C- or above in 1172, 1544, 2153, 2162.xx, 2182H, or 4182H; or a grade of C- or above in both 1152 and CSE 2321. Not open to students with credit for 4568 or 5520H.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1392,7 +1392,7 @@
     "Title": "Foundations of Higher Mathematics",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Non-Computer Science Core.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: Major or minor in Math, CSE, CIS, ECE, IMME, STAT, STEMED-PRE, or STEMED-BS. If CIS, CSE, or ECE: a grade of C- or above in CSE 2321 and a grade of C- or above in 1161.xx, 1172, 1181H, 1534, 1544, 1152, or 4181H.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1403,7 +1403,7 @@
     "Title": "Ethics in the Professions: Introduction to Computing Ethics and Effective Presentation",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Computer Science Core.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "No prerequisite listed.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1414,7 +1414,7 @@
     "Title": "Mechanics, Work and Energy, Thermal Physics",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under General College of Engineering Requirements.",
     "Credits": 5,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq or concur: Math 1141, 1151, 1154, 1156, 1161, 1181H, or 4181H. This course is available for EM credit.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1425,7 +1425,7 @@
     "Title": "E&M, Optics, Modern Physics",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 5,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: Physics 1250, 1250H, 1260, or 1270; and Math 1141, 1151, 1154, or above; or permission of instructor. Concur: Math 1152, 1155, 1161, 1172, 1181H, or 4181H.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1436,7 +1436,7 @@
     "Title": "Introduction to Probability and Statistics for Engineers",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under Non-Computer Science Core.",
     "Credits": 3,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: Math 1152, 1161.xx, 1172, 1181H, or equivalent, or permission of instructor. Not open to students with credit for 3440, 3450, 3450.01, 3450.02, 3460, 3470, or 3470.02.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1447,7 +1447,7 @@
     "Title": "Introduction to Mathematical Statistics I",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: C- or better in Math 2153, 2162.xx, 2182H, or 4182H, or permission of instructor. Not open to students with credit for 3201, 4202, 6201, 6301, 6801, Math 4530, or 5530H.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   },
@@ -1458,7 +1458,7 @@
     "Title": "Intermediate Data Analysis I",
     "Description": "Listed in the OSU BS CSE GOLD curriculum sheet under CSE Math and Science Electives.",
     "Credits": 4,
-    "PrerequisiteText": "",
+    "PrerequisiteText": "Prereq: Math 1075 or equivalent, Math Placement Level R, or permission of instructor. Not open to students with credit for 5302.",
     "SourceUrl": "https://cse.osu.edu/sites/default/files/uploads/gold_bs_cse_requirements_and_sample_schedule_rev_071720_gold.pdf",
     "LastVerified": "2026-08-07T00:00:00"
   }

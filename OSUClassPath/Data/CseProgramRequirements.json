@@ -1,0 +1,200 @@
+{
+  "programName": "Bachelor of Science in Computer Science and Engineering",
+  "shortName": "BS CSE",
+  "institution": "The Ohio State University",
+  "college": "College of Engineering",
+  "department": "Department of Computer Science and Engineering",
+  "lastVerified": "2026-08-10",
+  "sources": [
+    "https://cse.osu.edu/prospective-students/undergrad/majors/bs-cse-program-information",
+    "https://cse.osu.edu/about-cse",
+    "https://cse.osu.edu/bscse-and-bscis-specializations",
+    "https://cse.osu.edu/technical-electives-outside-department"
+  ],
+  "background": [
+    "The BS CSE program is offered through Ohio State's College of Engineering.",
+    "The program combines engineering, physical sciences, mathematics, and intensive computer science coursework.",
+    "Ohio State's Department of Computer Science and Engineering was founded in 1968.",
+    "The department offers undergraduate and graduate programs including BS CSE, BS CIS, BA CIS, MS CSE, and PhD CSE.",
+    "CSE research areas include artificial intelligence, computer graphics, data management, high performance computing, networking and distributed systems, security, software engineering, systems, programming languages, and theory."
+  ],
+  "requirements": [
+    {
+      "name": "CSE Core",
+      "requiredCredits": 25,
+      "description": "All BS CSE students must complete the required core CSE sequence. The local course database stores CSE 2501 / PHILOS ethics content as part of the core requirement.",
+      "notes": [
+        "Official OSU page lists the CSE core courses and their prerequisites.",
+        "Core courses include CSE 2221, CSE 2231, CSE 2321, CSE 2331, CSE 2421, CSE 2431, CSE 3341, and an ethics/professional issues course.",
+        "Students entering AU22 or later may use CSE 2501 or PHILOS 2338 for the ethics requirement; students who entered before AU22 or have permission to use Legacy GE may take PHILOS 1338.",
+        "Several core courses require earlier CSE, math, statistics, or writing coursework; always check the individual course prerequisite text."
+      ]
+    },
+    {
+      "name": "CSE Core Choices",
+      "requiredCredits": 17,
+      "description": "Students choose five additional CSE courses from required decision areas: software engineering or databases, architecture or networking, AI or game/animation, project, and capstone.",
+      "notes": [
+        "The decision areas are: software engineering or databases; computer architecture or networking; AI or game/animation; project; capstone.",
+        "Software engineering or databases: CSE 3231 or CSE 3241.",
+        "Computer architecture or networking: CSE 3421 or CSE 3461.",
+        "AI or game/animation: CSE 3521 or CSE 3541.",
+        "Project: one of CSE 3901, CSE 3902, or CSE 3903.",
+        "Capstone: one of the CSE 591X capstone options shown in the official program information.",
+        "Some core choices may also satisfy specialization requirements, depending on the student's specialization."
+      ]
+    },
+    {
+      "name": "Technical Electives",
+      "requiredCredits": 17,
+      "description": "All BS CSE students must complete 17 credit hours of technical elective coursework.",
+      "minimumCseCredits": 9,
+      "notes": [
+        "At least 9 technical elective credits must be in CSE.",
+        "The remaining 8 credits may be additional CSE 3000-level or higher courses not already counting toward another degree requirement, or approved non-CSE courses.",
+        "Some technical electives are determined by the student's selected specialization option.",
+        "Do not count a course twice: a course already used for core, core choice, capstone, math/science, GE, or another requirement should not also be counted as a technical elective.",
+        "CSE courses graded S/U or focused on research have special credit limits.",
+        "No more than 2 credit hours from CSE 4251, CSE 4252, CSE 4253, and CSE 4256 may count toward technical electives.",
+        "No more than 6 credit hours total from CSE 4193, CSE 4998, and CSE 4999 may count toward technical electives.",
+        "Non-CSE technical electives must be part of a completed minor, appear on the pre-approved outside technical elective list, or be approved by petition."
+      ]
+    },
+    {
+      "name": "Math and Science Electives",
+      "requiredCredits": 8,
+      "description": "BS CSE students must complete 8 credits of approved math and/or science electives.",
+      "notes": [
+        "The local database includes the approved options shown on the OSU BS CSE program information page and GOLD curriculum materials.",
+        "These are choices, not all required courses. Students choose enough approved options to reach 8 credits."
+      ]
+    },
+    {
+      "name": "General Education",
+      "requiredCredits": 24,
+      "description": "Engineering students need 24 credits in General Education.",
+      "notes": [
+        "The app treats GE entries as placeholders because GE course choices depend on the engineering GE rules and student selections.",
+        "Use OSU Engineering GE materials or advising resources for detailed GE category breakdowns."
+      ]
+    },
+    {
+      "name": "Non-Computer Science Core",
+      "requiredCredits": 15,
+      "description": "BS CSE students complete supplemental non-CSE core courses in engineering, digital logic, mathematics, and statistics.",
+      "notes": [
+        "Official current BS CSE information lists ECE 2360, ECE 2060, MATH 2568, MATH 3345, and STAT 3470.",
+        "ECE 2360 is required for students who entered the program in or after AU22. Students who entered prior to AU22 may take ECE 2020, but ECE 2360 is preferred.",
+        "Older GOLD curriculum materials may show ECE 2020 instead of ECE 2360."
+      ]
+    }
+  ],
+  "coreChoiceGroups": [
+    {
+      "name": "Software Engineering or Databases",
+      "choose": 1,
+      "courses": [ "CSE 3231", "CSE 3241" ]
+    },
+    {
+      "name": "Computer Architecture or Networking",
+      "choose": 1,
+      "courses": [ "CSE 3421", "CSE 3461" ]
+    },
+    {
+      "name": "AI or Game and Animation",
+      "choose": 1,
+      "courses": [ "CSE 3521", "CSE 3541" ]
+    },
+    {
+      "name": "Project",
+      "choose": 1,
+      "courses": [ "CSE 3901", "CSE 3902", "CSE 3903" ]
+    },
+    {
+      "name": "Capstone",
+      "choose": 1,
+      "courses": [ "CSE 5911", "CSE 5912", "CSE 5913", "CSE 5914", "CSE 5915", "CSE 5916" ]
+    }
+  ],
+  "technicalElectiveRules": [
+    "Total technical elective requirement: 17 credits.",
+    "At least 9 of the 17 credits must be CSE coursework.",
+    "CSE technical elective candidates are generally CSE courses at the 3000 level or higher that are not already counting toward another degree requirement.",
+    "The remaining technical elective credits may be additional eligible CSE courses or approved non-CSE courses at the 2000 level or higher.",
+    "Non-CSE technical electives must be from a completed minor, from the pre-approved outside technical elective list, or approved by petition.",
+    "No more than 2 credits from CSE 4251, CSE 4252, CSE 4253, and CSE 4256 may count toward technical electives.",
+    "No more than 6 credits total from CSE 4193, CSE 4998, and CSE 4999 may count toward technical electives.",
+    "Specialization requirements may determine part of the student's technical elective choices."
+  ],
+  "specializationOptions": [
+    {
+      "name": "Artificial Intelligence",
+      "summary": "Focuses on AI techniques and related advanced AI electives.",
+      "requirements": [
+        "CSE 3521",
+        "Additional AI specialization courses should be checked against the official specialization page because options can change."
+      ]
+    },
+    {
+      "name": "Computer Graphics and Game Design",
+      "summary": "Focuses on game development, graphics, animation, and interactive systems.",
+      "requirements": [
+        "CSE 3902",
+        "CSE 3541",
+        "Additional graphics/game specialization courses should be checked against the official specialization page because options can change."
+      ]
+    },
+    {
+      "name": "Database Systems and Data Analytics",
+      "summary": "Focuses on database systems, data management, and analytics.",
+      "requirements": [
+        "CSE 3241",
+        "Additional database/data analytics specialization courses should be checked against the official specialization page because options can change."
+      ]
+    },
+    {
+      "name": "Information and Computation Assurance",
+      "summary": "Focuses on security and assurance.",
+      "requirements": [
+        "CSE 3461 and security-focused electives are commonly relevant; check the official specialization page for the exact current list."
+      ]
+    },
+    {
+      "name": "Computer Networking",
+      "summary": "Focuses on networks, distributed systems, and related security/network electives.",
+      "requirements": [
+        "CSE 3461 and networking-focused electives are commonly relevant; check the official specialization page for the exact current list."
+      ]
+    },
+    {
+      "name": "Computer Systems",
+      "summary": "Focuses on computer architecture, operating systems, parallel computing, and systems-level topics.",
+      "requirements": [
+        "CSE 3421 and systems-focused electives are commonly relevant; check the official specialization page for the exact current list."
+      ]
+    },
+    {
+      "name": "Software Engineering",
+      "summary": "Focuses on software requirements, design, implementation, and applied software systems.",
+      "requirements": [
+        "CSE 3231",
+        "CSE 3232",
+        "One additional approved software engineering specialization course from the official specialization page."
+      ]
+    },
+    {
+      "name": "Individualized Option",
+      "summary": "Allows a student to build a focused plan with advising support.",
+      "requirements": [
+        "Students should consult academic advisors to identify an appropriate course set for their interests."
+      ]
+    }
+  ],
+  "advisingNotes": [
+    "Do not calculate graduation completion by summing every course option in the database. Many rows are choices, not required courses.",
+    "When answering student questions, distinguish between required credits and available course-option credits.",
+    "This app is a planning assistant, not an official degree audit.",
+    "For official degree audits, students should confirm requirements with OSU advising and the current OSU curriculum materials.",
+    "If a student asks whether a specific course will count for a requirement, answer from the available local data but recommend confirming with advising when the rule depends on specialization, petition approval, catalog year, GE status, or transfer credit."
+  ]
+}

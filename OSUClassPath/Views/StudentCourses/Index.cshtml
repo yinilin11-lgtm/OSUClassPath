@@ -1,57 +1,48 @@
 @model IEnumerable<OSUClassPath.Models.StudentCourse>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "My Courses";
 }
 
-<h1>我的課程</h1>
+<section class="info-page">
+    <div class="section-heading">
+        <span class="section-label" data-i18n="studentCoursesEyebrow">Course tracking</span>
+        <h1 data-i18n="studentCoursesTitle">My Courses</h1>
+        <p data-i18n="studentCoursesCopy">Track selected courses for simple planning, status review, and advising demos.</p>
+    </div>
 
-<p>
-    <a asp-action="Create">新增修課紀錄</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.StudentId)
-            </th>
-            <th>課程</th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Term)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Grade)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+    <p>
+        <a class="btn btn-primary" asp-action="Create" data-i18n="createNew">Create New</a>
+    </p>
+
+    <div class="data-card">
+    <table class="table data-table">
+        <thead>
+            <tr>
+                <th data-i18n="studentName">Student</th>
+                <th data-i18n="course">Course</th>
+                <th data-i18n="status">Status</th>
+                <th data-i18n="term">Term</th>
+                <th data-i18n="grade">Grade</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @item.Student?.Name
-            </td>
-            <td>
-                @item.Course?.CourseCode
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Term)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Grade)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">編輯</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">詳細資料</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">刪除</a>
-            </td>
-        </tr>
+            <tr>
+                <td>@item.Student?.Name</td>
+                <td>@item.Course?.CourseCode</td>
+                <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                <td>@Html.DisplayFor(modelItem => item.Term)</td>
+                <td>@Html.DisplayFor(modelItem => item.Grade)</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" data-i18n="edit">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id" data-i18n="details">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" data-i18n="delete">Delete</a>
+                </td>
+            </tr>
 }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+    </div>
+</section>

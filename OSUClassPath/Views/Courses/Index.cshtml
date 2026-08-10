@@ -15,24 +15,24 @@
 <div class="course-page">
     <section class="course-hero">
         <div>
-            <span class="section-label">Course explorer</span>
-            <h1>Pick a CSE path by interest</h1>
-            <p>
+            <span class="section-label" data-i18n="coursesEyebrow">Course explorer</span>
+            <h1 data-i18n="coursesHeroTitle">Pick a CSE path by interest</h1>
+            <p data-i18n="coursesHeroCopy">
                 Browse the non-GE OSU CSE curriculum without staring at a giant requirement sheet.
                 Start with a track, then open the details only when a course looks useful.
             </p>
         </div>
         <div class="course-stats" aria-label="Course dataset summary">
             <div>
-                <span>Total courses</span>
+                <span data-i18n="coursesTotal">Total courses</span>
                 <strong>@totalCourses</strong>
             </div>
             <div>
-                <span>Electives</span>
+                <span data-i18n="coursesElectives">Electives</span>
                 <strong>@technicalElectives</strong>
             </div>
             <div>
-                <span>Tracks</span>
+                <span data-i18n="coursesTracks">Tracks</span>
                 <strong>@trackCount</strong>
             </div>
         </div>
@@ -44,48 +44,48 @@
             <a class="track-card track-@Slug(track.TrackName)" asp-action="Index" asp-route-track="@track.TrackName">
                 <span>@TrackIcon(track.TrackName)</span>
                 <strong>@track.TrackName</strong>
-                <small>@track.CourseCount courses</small>
+                <small><span class="track-course-count">@track.CourseCount</span> <span data-i18n="coursesLower">courses</span></small>
             </a>
         }
     </section>
 
     <form asp-action="Index" method="get" class="course-filters">
         <div>
-            <label class="form-label" for="searchString">Search</label>
+            <label class="form-label" for="searchString" data-i18n="coursesSearch">Search</label>
             <input id="searchString"
                    type="text"
                    name="searchString"
                    value="@ViewData["CurrentFilter"]"
                    class="form-control"
-                   placeholder="Try AI, game, CSE 5523, security..." />
+                   placeholder="Try AI, game, CSE 5523, security..."
+                   data-i18n-placeholder="coursesSearchPlaceholder" />
         </div>
 
         <div>
-            <label class="form-label" for="category">Category</label>
+            <label class="form-label" for="category" data-i18n="coursesCategory">Category</label>
             <select id="category" name="category" class="form-select" asp-items="categories">
-                <option value="">All categories</option>
+                <option value="" data-i18n="coursesAllCategories">All categories</option>
             </select>
         </div>
 
         <div>
-            <label class="form-label" for="track">Track</label>
+            <label class="form-label" for="track" data-i18n="coursesTrack">Track</label>
             <select id="track" name="track" class="form-select" asp-items="tracks">
-                <option value="">All tracks</option>
+                <option value="" data-i18n="coursesAllTracks">All tracks</option>
             </select>
         </div>
 
         <div class="course-filter-actions">
-            <button type="submit" class="btn btn-primary">Explore</button>
-            <a asp-action="Index" class="btn btn-outline-secondary">Reset</a>
+            <button type="submit" class="btn btn-primary" data-i18n="coursesExplore">Explore</button>
+            <a asp-action="Index" class="btn btn-outline-secondary" data-i18n="coursesReset">Reset</a>
         </div>
     </form>
 
     <div class="course-toolbar">
         <div>
-            <span class="course-result-label">Showing</span>
-            <strong>@Model.Count() courses</strong>
+            <span class="course-result-label" data-i18n="coursesShowing">Showing</span>
+            <strong>@Model.Count() <span data-i18n="coursesLower">courses</span></strong>
         </div>
-        <a asp-action="Create" class="btn btn-outline-primary btn-sm">Create New</a>
     </div>
 
     <section class="course-card-grid" aria-label="Course results">
@@ -94,7 +94,7 @@
             <article class="course-card">
                 <div class="course-card-top">
                     <span class="course-code">@item.CourseCode</span>
-                    <span class="credit-chip">@item.Credits credits</span>
+                    <span class="credit-chip">@item.Credits <span data-i18n="creditsLower">credits</span></span>
                 </div>
 
                 <h2>@item.Title</h2>
@@ -110,9 +110,8 @@
                 <p>@item.Description</p>
 
                 <div class="course-card-actions">
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" data-i18n="details">Details</a>
+                    <a asp-controller="StudentCourses" asp-action="Create" asp-route-courseId="@item.Id" data-i18n="saveCourse">Save</a>
                 </div>
             </article>
         }

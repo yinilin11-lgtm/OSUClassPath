@@ -1,0 +1,41 @@
+@model OSUClassPath.Models.AdminUserCoursesViewModel
+
+@{
+    ViewData["Title"] = "User Courses";
+}
+
+<section class="info-page">
+    <div class="section-heading">
+        <span class="section-label" data-i18n="savedCourses">Saved Courses</span>
+        <h1>@Model.User.Email</h1>
+        <p>@Model.User.DisplayName · @Model.User.Program · @Model.User.CatalogYear</p>
+    </div>
+
+    <div class="data-card">
+        <table class="table data-table">
+            <thead>
+                <tr>
+                    <th data-i18n="course">Course</th>
+                    <th data-i18n="status">Status</th>
+                    <th data-i18n="term">Term</th>
+                    <th data-i18n="grade">Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+@foreach (var item in Model.Courses)
+{
+                <tr>
+                    <td>@item.Course?.CourseCode</td>
+                    <td>@Html.DisplayFor(model => item.Status)</td>
+                    <td>@Html.DisplayFor(model => item.Term)</td>
+                    <td>@Html.DisplayFor(model => item.Grade)</td>
+                </tr>
+}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="home-actions">
+        <a asp-action="Index" class="btn btn-outline-primary" data-i18n="backToList">Back to list</a>
+    </div>
+</section>

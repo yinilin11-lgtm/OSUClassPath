@@ -1,46 +1,42 @@
 @{
-    ViewData["Title"] = "Data & Privacy";
+    ViewData["Title"] = "About & Privacy";
 }
 
 <section class="info-page">
     <div class="section-heading">
-        <span class="section-label">Project information</span>
-        <h1>Data & Privacy</h1>
-        <p>
-            This page explains how OSU CoursePath handles local data and AI requests during development and portfolio review.
+        <span class="section-label" data-i18n="aboutEyebrow">Project scope</span>
+        <h1 data-i18n="aboutTitle">About & Privacy</h1>
+        <p data-i18n="aboutCopy">
+            A short note on what OSU CoursePath stores, what the AI advisor uses, and where official advising still matters.
         </p>
     </div>
 
     <div class="info-grid">
         <article class="info-card">
-            <h2>Local Application Data</h2>
-            <p>
-                Course, student, and course-selection records are stored in a local SQLite database used by the app.
-                This project is intended for learning, demonstration, and portfolio use.
+            <h2 data-i18n="aboutAccountTitle">Personal Workspace</h2>
+            <p data-i18n="aboutAccountCopy">
+                User accounts and saved courses are used to keep each person's planning workspace separate.
             </p>
         </article>
 
         <article class="info-card">
-            <h2>API Keys</h2>
-            <p>
-                API keys should be stored with user secrets or environment variables. They should not be committed to GitHub
-                or written directly into source code.
+            <h2 data-i18n="aboutAiTitle">AI Advisor Requests</h2>
+            <p data-i18n="aboutAiCopy">
+                When the AI advisor is used, the app sends the user's question and relevant course context to the configured AI provider.
             </p>
         </article>
 
         <article class="info-card">
-            <h2>AI Chat Requests</h2>
-            <p>
-                When the AI advisor is configured, the app sends the user's question and relevant course context to the
-                configured AI provider so it can generate a response.
+            <h2 data-i18n="aboutPrivateTitle">Private Areas</h2>
+            <p data-i18n="aboutPrivateCopy">
+                Saved courses, personal planning records, and admin tools are private areas, not public catalog content.
             </p>
         </article>
 
         <article class="info-card">
-            <h2>Portfolio Scope</h2>
-            <p>
-                OSU CoursePath is not an official advising system. Academic decisions should always be verified with official
-                university resources and academic advisors.
+            <h2 data-i18n="aboutOfficialTitle">Not Official Advising</h2>
+            <p data-i18n="aboutOfficialCopy">
+                OSU CoursePath is a portfolio project, not an official Ohio State advising system. Academic decisions should be verified with official OSU resources or an academic advisor.
             </p>
         </article>
     </div>

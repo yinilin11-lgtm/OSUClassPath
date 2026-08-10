@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Admin Login";
+    var returnUrl = ViewData["ReturnUrl"] as string ?? "/Students";
+    var configured = ViewData["AdminPasswordConfigured"] as bool? ?? false;
+}
+
+<section class="info-page admin-login-page">
+    <div class="section-heading">
+        <span class="section-label" data-i18n="adminEyebrow">Private area</span>
+        <h1 data-i18n="adminTitle">Admin Login</h1>
+        <p data-i18n="adminCopy">Student records and course management tools are private. Enter the admin password to continue.</p>
+    </div>
+
+    <div class="admin-login-card">
+        @if (!configured)
+        {
+            <div class="alert alert-warning" data-i18n="adminPasswordMissing">
+                Admin password is not configured yet. Set Admin:Password with user secrets or the OSUCOURSEPATH_ADMIN_PASSWORD environment variable.
+            </div>
+        }
+
+        <form asp-action="Login" method="post">
+            <input type="hidden" name="returnUrl" value="@returnUrl" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <label class="form-label" for="password" data-i18n="adminPassword">Password</label>
+            <input class="form-control" id="password" name="password" type="password" autocomplete="current-password" required />
+
+            <button class="btn btn-primary" type="submit" data-i18n="adminContinue">Continue</button>
+        </form>
+    </div>
+</section>

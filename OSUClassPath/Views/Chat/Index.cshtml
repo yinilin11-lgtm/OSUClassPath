@@ -5,43 +5,29 @@
 <section class="agent-page">
     <div class="agent-hero">
         <div class="agent-hero-copy">
-            <span class="agent-eyebrow">OSU CoursePath AI Advisor</span>
-            <h1>Plan CSE courses by requirement and track</h1>
-            <p>
-                Ask about core courses, prerequisites, technical electives, and focus areas such as AI,
-                game development, software engineering, security, systems, and data.
+            <span class="agent-eyebrow" data-i18n="eyebrow">OSU CoursePath AI Advisor</span>
+            <h1 data-i18n="heroTitle">Plan CSE courses by requirement and track</h1>
+            <p data-i18n="heroCopy">
+                Ask about local catalog records, prerequisites, BS CSE requirements, technical electives,
+                and focus areas such as AI, game development, software engineering, security, systems, and data.
             </p>
         </div>
 
-        <div class="agent-hero-panel">
-            <div>
-                <span class="agent-panel-label">Dataset</span>
-                <strong>133 OSU CSE courses</strong>
-            </div>
-            <div>
-                <span class="agent-panel-label">Tracks</span>
-                <strong>AI, Gaming, Security</strong>
-            </div>
-            <div>
-                <span class="agent-panel-label">Status</span>
-                <strong id="agentStatus">Ready</strong>
-            </div>
-        </div>
     </div>
 
     <div class="agent-workspace">
         <aside class="agent-sidebar" aria-label="Suggested questions">
-            <h2>Suggested questions</h2>
-            <button type="button" class="agent-suggestion" data-agent-question="I want to focus on AI. Which CSE courses should I consider?">
+            <h2 data-i18n="suggestedTitle">Suggested questions</h2>
+            <button type="button" class="agent-suggestion" data-agent-suggestion="ai" data-i18n="suggestionAi">
                 AI course path
             </button>
-            <button type="button" class="agent-suggestion" data-agent-question="Which courses fit a game development or graphics track?">
+            <button type="button" class="agent-suggestion" data-agent-suggestion="game" data-i18n="suggestionGame">
                 Game / graphics track
             </button>
-            <button type="button" class="agent-suggestion" data-agent-question="Which security technical electives are available?">
+            <button type="button" class="agent-suggestion" data-agent-suggestion="security" data-i18n="suggestionSecurity">
                 Security electives
             </button>
-            <button type="button" class="agent-suggestion" data-agent-question="What are the core CSE courses and core choices?">
+            <button type="button" class="agent-suggestion" data-agent-suggestion="core" data-i18n="suggestionCore">
                 Core requirements
             </button>
         </aside>
@@ -49,8 +35,8 @@
         <div class="agent-card">
             <div class="agent-card-header">
                 <div>
-                    <h2>Course advisor chat</h2>
-                    <p>Ask about course descriptions, prerequisites, academic plans, and student course progress.</p>
+                    <h2 data-i18n="chatTitle">Course advisor chat</h2>
+                    <p data-i18n="chatCopy">Ask about course descriptions, prerequisites, BS CSE requirements, and academic plans.</p>
                 </div>
                 <span class="agent-live-dot" aria-hidden="true"></span>
             </div>
@@ -58,19 +44,18 @@
             <div class="agent-chat" id="agentMessages" aria-live="polite">
                 <div class="agent-message agent-message-assistant">
                     <div class="agent-avatar">AI</div>
-                    <div class="agent-bubble">
-                        Hi, I am the OSU CoursePath AI advisor. Ask me about course information, prerequisites, or planning ideas based on the available course data.
-                    </div>
+                    <div class="agent-bubble" data-agent-welcome data-i18n="welcome">Hi, I am the OSU CoursePath AI advisor. Ask me about course information, prerequisites, BS CSE requirements, or planning ideas based on the local course catalog.</div>
                 </div>
             </div>
 
             <form class="agent-composer" id="agentForm">
-                <label class="visually-hidden" for="agentInput">Enter your question</label>
+                <label class="visually-hidden" for="agentInput" data-i18n="inputLabel">Enter your question</label>
                 <textarea id="agentInput"
                           rows="2"
                           placeholder="Ask a course question, such as: What is CSE 2221 about?"
+                          data-i18n-placeholder="inputPlaceholder"
                           required></textarea>
-                <button type="submit" id="agentSubmit">Send</button>
+                <button type="submit" id="agentSubmit" data-i18n="send">Send</button>
             </form>
         </div>
     </div>
