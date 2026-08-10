@@ -6,7 +6,9 @@
     var plannerData = JsonSerializer.Serialize(new
     {
         courses = Model.Courses,
-        terms = Model.Terms
+        terms = Model.Terms,
+        academicYear = Model.AcademicYear,
+        completedCourseCodes = Model.CompletedCourseCodes
     });
 }
 
@@ -20,6 +22,10 @@
             </p>
         </div>
         <div class="planner-summary" aria-label="Planner summary">
+            <div>
+                <span data-i18n="plannerAcademicYear">Year</span>
+                <strong id="plannerAcademicYear">@(Model.AcademicYear?.ToString() ?? "Guest")</strong>
+            </div>
             <div>
                 <span data-i18n="plannerTotalCredits">Total credits</span>
                 <strong id="plannerTotalCredits">0</strong>

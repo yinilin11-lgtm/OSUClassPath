@@ -1,6 +1,9 @@
 const plannerData = window.osuPlannerData || { courses: [], terms: [] };
 const plannerStorageKey = "osuCoursePathPlanner";
 const plannerQueueStorageKey = "osuCoursePathPlannerQueue";
+const completedCourseCodes = new Set(
+    (plannerData.completedCourseCodes || plannerData.CompletedCourseCodes || []).map(normalizeCode)
+);
 
 const coursesByCode = new Map(
     plannerData.courses.map((course) => [normalizeCode(course.CourseCode || course.courseCode), normalizeCourse(course)])
@@ -218,6 +221,12 @@ function findWarnings() {
     const termIndexByCourse = new Map();
     plannerTerms.forEach((term, termIndex) => {
         term.courses.forEach((courseCode) => termIndexByCourse.set(courseCode, termIndex));
+    });
+
+    completedCourseCodes.forEach((courseCode) => {
+        if (!termIndexByCourse.has(courseCode)) {
+            termIndexByCourse.set(courseCode, -1);
+        }
     });
 
     const warnings = [];

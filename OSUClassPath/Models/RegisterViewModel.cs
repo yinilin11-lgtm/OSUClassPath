@@ -22,5 +22,8 @@ public class RegisterViewModel
     [Compare(nameof(Password))]
     public string ConfirmPassword { get; set; } = string.Empty;
 
+    [Range(1, 6)]
+    public int AcademicYear { get; set; } = 1;
+
     public string? ReturnUrl { get; set; }
 }

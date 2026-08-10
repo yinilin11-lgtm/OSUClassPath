@@ -1,0 +1,63 @@
+@model OSUClassPath.Models.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<section class="info-page auth-page">
+    <div class="section-heading">
+        <span class="section-label" data-i18n="profileEyebrow">Student profile</span>
+        <h1 data-i18n="profileTitle">Planning profile</h1>
+        <p data-i18n="profileCopy">Keep your academic year and planning preferences up to date so prerequisite checks can use your completed course history.</p>
+    </div>
+
+    @if (ViewData["Saved"] as bool? == true)
+    {
+        <div class="planner-alert planner-alert-clear">Profile saved.</div>
+    }
+
+    <div class="admin-login-card">
+        <form asp-action="Profile" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <label class="form-label" asp-for="DisplayName"></label>
+            <input class="form-control" asp-for="DisplayName" />
+            <span class="text-danger" asp-validation-for="DisplayName"></span>
+
+            <label class="form-label" asp-for="Program"></label>
+            <input class="form-control" asp-for="Program" />
+            <span class="text-danger" asp-validation-for="Program"></span>
+
+            <label class="form-label" asp-for="AcademicYear">Current academic year</label>
+            <select class="form-select" asp-for="AcademicYear">
+                <option value="1">Year 1</option>
+                <option value="2">Year 2</option>
+                <option value="3">Year 3</option>
+                <option value="4">Year 4</option>
+                <option value="5">Year 5+</option>
+            </select>
+            <span class="text-danger" asp-validation-for="AcademicYear"></span>
+
+            <label class="form-label" asp-for="CatalogYear"></label>
+            <input class="form-control" asp-for="CatalogYear" />
+            <span class="text-danger" asp-validation-for="CatalogYear"></span>
+
+            <label class="form-label" asp-for="StartingTerm"></label>
+            <input class="form-control" asp-for="StartingTerm" />
+            <span class="text-danger" asp-validation-for="StartingTerm"></span>
+
+            <label class="form-label" asp-for="PreferredCredits"></label>
+            <input class="form-control" asp-for="PreferredCredits" />
+            <span class="text-danger" asp-validation-for="PreferredCredits"></span>
+
+            <div class="auth-actions">
+                <button class="btn btn-primary" type="submit" data-i18n="save">Save</button>
+                <a class="btn btn-outline-primary" asp-controller="StudentCourses" asp-action="Index" data-i18n="navMyCourses">My Courses</a>
+            </div>
+        </form>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,10 +1,10 @@
-using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 
 namespace OSUClassPath.Models;
 
-public class ApplicationUser : IdentityUser
+public class ProfileViewModel
 {
+    [Required]
     [StringLength(100)]
     public string DisplayName { get; set; } = string.Empty;
 

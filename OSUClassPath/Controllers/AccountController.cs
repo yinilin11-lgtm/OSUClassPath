@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OSUClassPath.Models;
 
@@ -66,7 +67,8 @@ public class AccountController : Controller
         {
             UserName = model.Email,
             Email = model.Email,
-            DisplayName = model.DisplayName
+            DisplayName = model.DisplayName,
+            AcademicYear = model.AcademicYear
         };
 
         var result = await _userManager.CreateAsync(user, model.Password);
@@ -91,6 +93,55 @@ public class AccountController : Controller
     {
         await _signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
+    }
+
+    [Authorize]
+    [HttpGet]
+    public async Task<IActionResult> Profile()
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user is null)
+        {
+            return RedirectToAction(nameof(Login));
+        }
+
+        return View(new ProfileViewModel
+        {
+            DisplayName = user.DisplayName,
+            Program = user.Program,
+            CatalogYear = user.CatalogYear,
+            AcademicYear = user.AcademicYear,
+            StartingTerm = user.StartingTerm,
+            PreferredCredits = user.PreferredCredits
+        });
+    }
+
+    [Authorize]
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Profile(ProfileViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        var user = await _userManager.GetUserAsync(User);
+        if (user is null)
+        {
+            return RedirectToAction(nameof(Login));
+        }
+
+        user.DisplayName = model.DisplayName;
+        user.Program = model.Program;
+        user.CatalogYear = model.CatalogYear;
+        user.AcademicYear = model.AcademicYear;
+        user.StartingTerm = model.StartingTerm;
+        user.PreferredCredits = model.PreferredCredits;
+
+        await _userManager.UpdateAsync(user);
+        ViewData["Saved"] = true;
+        return View(model);
     }
 
     private static bool IsLocalReturnUrl(string? returnUrl)

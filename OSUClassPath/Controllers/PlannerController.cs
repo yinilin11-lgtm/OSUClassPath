@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OSUClassPath.Data;
@@ -8,10 +9,14 @@ namespace OSUClassPath.Controllers;
 public class PlannerController : Controller
 {
     private readonly AdvisorDbContext _context;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public PlannerController(AdvisorDbContext context)
+    public PlannerController(
+        AdvisorDbContext context,
+        UserManager<ApplicationUser> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
 
     public async Task<IActionResult> Index()
@@ -53,10 +58,32 @@ public class PlannerController : Controller
             terms = BuildDefaultTerms();
         }
 
+        var userId = _userManager.GetUserId(User);
+        var completedCourseCodes = new List<string>();
+        int? academicYear = null;
+
+        if (!string.IsNullOrWhiteSpace(userId))
+        {
+            var user = await _userManager.GetUserAsync(User);
+            academicYear = user?.AcademicYear;
+
+            completedCourseCodes = await _context.StudentCourses
+                .AsNoTracking()
+                .Include(record => record.Course)
+                .Where(record =>
+                    record.UserId == userId
+                    && (record.Status == CourseStatus.Completed || record.Status == CourseStatus.Transferred)
+                    && record.Course != null)
+                .Select(record => record.Course!.CourseCode)
+                .ToListAsync();
+        }
+
         return View(new PlannerIndexViewModel
         {
             Courses = courses,
-            Terms = terms
+            Terms = terms,
+            AcademicYear = academicYear,
+            CompletedCourseCodes = completedCourseCodes
         });
     }
 

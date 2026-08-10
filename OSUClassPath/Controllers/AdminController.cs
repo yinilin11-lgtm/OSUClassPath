@@ -35,6 +35,7 @@ public class AdminController : Controller
                     DisplayName = user.DisplayName,
                     Program = user.Program,
                     CatalogYear = user.CatalogYear,
+                    AcademicYear = user.AcademicYear,
                     PreferredCredits = user.PreferredCredits,
                     SavedCourseCount = courses.Count()
                 })
@@ -57,6 +58,7 @@ public class AdminController : Controller
                 DisplayName = user.DisplayName,
                 Program = user.Program,
                 CatalogYear = user.CatalogYear,
+                AcademicYear = user.AcademicYear,
                 PreferredCredits = user.PreferredCredits,
                 SavedCourseCount = _context.StudentCourses.Count(course => course.UserId == user.Id)
             })

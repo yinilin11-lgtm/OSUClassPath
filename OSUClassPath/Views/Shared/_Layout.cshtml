@@ -55,7 +55,7 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <span class="nav-link text-dark account-name">@UserManager.GetUserName(User)</span>
+                                <a class="nav-link text-dark account-name" href="/Account/Profile" data-i18n="navProfile">Profile</a>
                             </li>
                             <li class="nav-item">
                                 <form asp-controller="Account" asp-action="Logout" method="post">

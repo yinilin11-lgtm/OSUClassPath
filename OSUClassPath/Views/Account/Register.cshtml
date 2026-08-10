@@ -24,6 +24,16 @@
             <input class="form-control" asp-for="Email" autocomplete="email" />
             <span class="text-danger" asp-validation-for="Email"></span>
 
+            <label class="form-label" asp-for="AcademicYear">Current academic year</label>
+            <select class="form-select" asp-for="AcademicYear">
+                <option value="1">Year 1</option>
+                <option value="2">Year 2</option>
+                <option value="3">Year 3</option>
+                <option value="4">Year 4</option>
+                <option value="5">Year 5+</option>
+            </select>
+            <span class="text-danger" asp-validation-for="AcademicYear"></span>
+
             <label class="form-label" asp-for="Password"></label>
             <input class="form-control" asp-for="Password" autocomplete="new-password" />
             <span class="text-danger" asp-validation-for="Password"></span>

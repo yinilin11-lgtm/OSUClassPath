@@ -12,6 +12,8 @@ public class AdminUserSummaryViewModel
 
     public int CatalogYear { get; set; }
 
+    public int AcademicYear { get; set; }
+
     public int PreferredCredits { get; set; }
 
     public int SavedCourseCount { get; set; }
