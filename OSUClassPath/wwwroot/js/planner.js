@@ -1,5 +1,6 @@
 const plannerData = window.osuPlannerData || { courses: [], terms: [] };
 const plannerStorageKey = "osuCoursePathPlanner";
+const plannerQueueStorageKey = "osuCoursePathPlannerQueue";
 
 const coursesByCode = new Map(
     plannerData.courses.map((course) => [normalizeCode(course.CourseCode || course.courseCode), normalizeCourse(course)])
@@ -59,6 +60,44 @@ function loadPlanner() {
 
 function savePlanner() {
     localStorage.setItem(plannerStorageKey, JSON.stringify(plannerTerms));
+}
+
+function applyQueuedCourses() {
+    let queuedCourses = [];
+    try {
+        queuedCourses = JSON.parse(localStorage.getItem(plannerQueueStorageKey)) || [];
+    } catch {
+        queuedCourses = [];
+    }
+
+    const validQueuedCourses = queuedCourses
+        .map(normalizeCode)
+        .filter((code) => coursesByCode.has(code));
+
+    if (validQueuedCourses.length === 0) {
+        return;
+    }
+
+    validQueuedCourses.forEach((courseCode) => {
+        plannerTerms.forEach((term) => {
+            term.courses = term.courses.filter((code) => code !== courseCode);
+        });
+
+        findBestTermForCourse(courseCode).courses.push(courseCode);
+    });
+
+    localStorage.removeItem(plannerQueueStorageKey);
+    savePlanner();
+}
+
+function findBestTermForCourse(courseCode) {
+    const course = coursesByCode.get(courseCode);
+    const firstTermWithRoom = plannerTerms.find((term) => {
+        const credits = term.courses.reduce((sum, code) => sum + (coursesByCode.get(code)?.credits || 0), 0);
+        return credits + (course?.credits || 0) <= Math.max(term.recommendedCredits, 15);
+    });
+
+    return firstTermWithRoom || plannerTerms[plannerTerms.length - 1];
 }
 
 function setupOptions() {
@@ -262,4 +301,5 @@ resetButton.addEventListener("click", () => {
 });
 
 setupOptions();
+applyQueuedCourses();
 renderPlanner();

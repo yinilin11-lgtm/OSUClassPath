@@ -8,6 +8,7 @@ const suggestionButtons = document.querySelectorAll(".agent-suggestion");
 const languageButtons = document.querySelectorAll("[data-agent-language]");
 const conversationHistory = [];
 const maxHistoryMessages = 10;
+const plannerQueueStorageKey = "osuCoursePathPlannerQueue";
 let currentLanguage = localStorage.getItem("agentLanguage") || "en";
 
 const translations = {
@@ -44,6 +45,12 @@ const translations = {
         missingContextNote: "Note: I could not find matching local course records, so this answer may need manual verification.",
         requestFailed: "AI advisor request failed.",
         unreachable: "I could not reach the AI advisor:"
+        ,
+        suggestedCoursesTitle: "Suggested courses",
+        addToPlanner: "Add to Planner",
+        addedToPlanner: "Added",
+        openPlanner: "Open Planner",
+        creditsLower: "credits"
     },
     zh: {
         navHome: "\u4e3b\u9801",
@@ -77,7 +84,12 @@ const translations = {
         checking: "\u6b63\u5728\u67e5\u8a62\u672c\u5730\u8ab2\u7a0b\u8cc7\u6599...",
         missingContextNote: "\u63d0\u9192\uff1a\u6211\u6c92\u6709\u627e\u5230\u5b8c\u5168\u7b26\u5408\u7684\u672c\u5730\u8ab2\u7a0b\u8cc7\u6599\uff0c\u6240\u4ee5\u9019\u500b\u56de\u7b54\u53ef\u80fd\u9700\u8981\u4eba\u5de5\u78ba\u8a8d\u3002",
         requestFailed: "AI \u9867\u554f\u8acb\u6c42\u5931\u6557\u3002",
-        unreachable: "\u76ee\u524d\u7121\u6cd5\u9023\u4e0a AI \u9867\u554f\uff1a"
+        unreachable: "\u76ee\u524d\u7121\u6cd5\u9023\u4e0a AI \u9867\u554f\uff1a",
+        suggestedCoursesTitle: "\u5efa\u8b70\u8ab2\u7a0b",
+        addToPlanner: "\u52a0\u5230\u898f\u5283",
+        addedToPlanner: "\u5df2\u52a0\u5165",
+        openPlanner: "\u958b\u555f\u898f\u5283",
+        creditsLower: "\u5b78\u5206"
     }
 };
 
@@ -122,6 +134,84 @@ function appendMessage(role, text) {
     messages.scrollTop = messages.scrollHeight;
 
     return message;
+}
+
+function appendSuggestedCourses(messageElement, courses) {
+    if (!Array.isArray(courses) || courses.length === 0) {
+        return;
+    }
+
+    const panel = document.createElement("div");
+    panel.className = "agent-course-suggestions";
+
+    const title = document.createElement("h3");
+    title.textContent = t("suggestedCoursesTitle");
+    panel.appendChild(title);
+
+    const grid = document.createElement("div");
+    grid.className = "agent-course-suggestion-grid";
+
+    courses.slice(0, 6).forEach((rawCourse) => {
+        const course = normalizeSuggestedCourse(rawCourse);
+        const card = document.createElement("article");
+        card.className = "agent-course-card";
+        card.innerHTML = `
+            <div class="course-card-top">
+                <span class="course-code">${escapeHtml(course.code)}</span>
+                <span class="credit-chip">${course.credits} ${escapeHtml(t("creditsLower") || "credits")}</span>
+            </div>
+            <h4>${escapeHtml(course.title)}</h4>
+            <p>${escapeHtml(course.category)}${course.track ? ` · ${escapeHtml(course.track)}` : ""}</p>
+            <div class="agent-course-card-actions">
+                <button type="button">${escapeHtml(t("addToPlanner"))}</button>
+                <a href="/Planner">${escapeHtml(t("openPlanner"))}</a>
+            </div>
+        `;
+
+        const addButton = card.querySelector("button");
+        addButton.addEventListener("click", () => {
+            queueCourseForPlanner(course.code);
+            addButton.textContent = t("addedToPlanner");
+            addButton.disabled = true;
+        });
+
+        grid.appendChild(card);
+    });
+
+    panel.appendChild(grid);
+    messageElement.appendChild(panel);
+    messages.scrollTop = messages.scrollHeight;
+}
+
+function normalizeSuggestedCourse(course) {
+    return {
+        code: course.courseCode || course.CourseCode || "",
+        title: course.title || course.Title || "",
+        credits: course.credits || course.Credits || 0,
+        category: course.category || course.Category || "",
+        track: course.track || course.Track || "",
+        prerequisiteText: course.prerequisiteText || course.PrerequisiteText || ""
+    };
+}
+
+function queueCourseForPlanner(courseCode) {
+    const normalizedCode = String(courseCode || "").trim().toUpperCase();
+    if (!normalizedCode) {
+        return;
+    }
+
+    let queuedCourses = [];
+    try {
+        queuedCourses = JSON.parse(localStorage.getItem(plannerQueueStorageKey)) || [];
+    } catch {
+        queuedCourses = [];
+    }
+
+    if (!queuedCourses.includes(normalizedCode)) {
+        queuedCourses.push(normalizedCode);
+    }
+
+    localStorage.setItem(plannerQueueStorageKey, JSON.stringify(queuedCourses));
 }
 
 function escapeHtml(value) {
@@ -239,6 +329,7 @@ async function sendMessage(message) {
 
         const assistantAnswer = `${data.answer}${contextNote}`;
         pendingMessage.querySelector(".agent-bubble").innerHTML = renderAssistantMarkdown(assistantAnswer);
+        appendSuggestedCourses(pendingMessage, data.suggestedCourses || data.SuggestedCourses);
         conversationHistory.push({ role: "assistant", content: assistantAnswer });
         trimConversationHistory();
     } catch (error) {

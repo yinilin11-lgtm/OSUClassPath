@@ -119,8 +119,11 @@ public class ChatController : Controller
                 systemPrompt,
                 userPrompt,
                 cancellationToken);
+            var suggestedCourses = await BuildSuggestedCoursesAsync(
+                $"{request.Message}\n{answer}",
+                cancellationToken);
 
-            return Ok(new AgentChatResponse(answer, model, usedContext));
+            return Ok(new AgentChatResponse(answer, model, usedContext, suggestedCourses));
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
@@ -342,6 +345,60 @@ public class ChatController : Controller
         }
 
         return contextBuilder.ToString();
+    }
+
+    private async Task<List<AgentSuggestedCourse>> BuildSuggestedCoursesAsync(
+        string text,
+        CancellationToken cancellationToken)
+    {
+        var normalizedText = text.Trim().ToUpperInvariant();
+        var courseCodes = Regex.Matches(normalizedText, @"\b[A-Z]{2,10}\s*\d{4}[A-Z]?\b")
+            .Select(match => Regex.Replace(match.Value, @"\s+", " "))
+            .Distinct()
+            .Take(8)
+            .ToList();
+
+        List<Course> courses;
+
+        if (courseCodes.Count > 0)
+        {
+            courses = await _context.Courses
+                .AsNoTracking()
+                .Where(course => courseCodes.Contains(course.CourseCode))
+                .OrderBy(course => course.CourseCode)
+                .Take(8)
+                .ToListAsync(cancellationToken);
+        }
+        else
+        {
+            var trackHints = GetTrackHints(normalizedText);
+            var categoryHints = GetCategoryHints(normalizedText);
+
+            if (trackHints.Count == 0 && categoryHints.Count == 0)
+            {
+                return [];
+            }
+
+            courses = await _context.Courses
+                .AsNoTracking()
+                .Where(course =>
+                    (trackHints.Count == 0 || trackHints.Contains(course.Track))
+                    && (categoryHints.Count == 0 || categoryHints.Contains(course.Category)))
+                .OrderBy(course => course.CourseCode)
+                .Take(8)
+                .ToListAsync(cancellationToken);
+        }
+
+        return courses
+            .Select(course => new AgentSuggestedCourse(
+                course.Id,
+                course.CourseCode,
+                course.Title,
+                course.Credits,
+                course.Category,
+                course.Track,
+                course.PrerequisiteText))
+            .ToList();
     }
 
     private static List<int> GetCourseLevelHints(string normalizedMessage)
@@ -621,7 +678,20 @@ public class ChatController : Controller
 
     public sealed record ChatResponse(string Answer, string Model);
 
-    public sealed record AgentChatResponse(string Answer, string Model, bool UsedCourseContext);
+    public sealed record AgentChatResponse(
+        string Answer,
+        string Model,
+        bool UsedCourseContext,
+        IReadOnlyList<AgentSuggestedCourse> SuggestedCourses);
+
+    public sealed record AgentSuggestedCourse(
+        int Id,
+        string CourseCode,
+        string Title,
+        int Credits,
+        string Category,
+        string Track,
+        string PrerequisiteText);
 
     private sealed record CseProgramRequirementContext(
         string ProgramName,
