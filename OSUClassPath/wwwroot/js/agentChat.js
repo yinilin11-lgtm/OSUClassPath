@@ -179,7 +179,7 @@ function appendSuggestedCourses(messageElement, courses) {
     });
 
     panel.appendChild(grid);
-    messageElement.appendChild(panel);
+    messageElement.insertAdjacentElement("afterend", panel);
     messages.scrollTop = messages.scrollHeight;
 }
 

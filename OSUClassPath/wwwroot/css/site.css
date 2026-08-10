@@ -1137,8 +1137,10 @@ body {
 }
 
 .agent-course-suggestions {
+  align-self: flex-start;
   margin-left: 46px;
   max-width: min(760px, 100%);
+  width: calc(100% - 46px);
 }
 
 .agent-course-suggestions h3 {
