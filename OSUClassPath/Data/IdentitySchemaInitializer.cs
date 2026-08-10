@@ -12,7 +12,6 @@ public static class IdentitySchemaInitializer
         await AddColumnIfMissingAsync(dbContext, "StudentCourses", "StudentId", "INTEGER");
         await AddColumnIfMissingAsync(dbContext, "Courses", "Category", "TEXT NOT NULL DEFAULT ''");
         await AddColumnIfMissingAsync(dbContext, "Courses", "Track", "TEXT NOT NULL DEFAULT ''");
-        await AddColumnIfMissingAsync(dbContext, "AspNetUsers", "AcademicYear", "INTEGER NOT NULL DEFAULT 1");
 
         await dbContext.Database.ExecuteSqlRawAsync("""
             CREATE TABLE IF NOT EXISTS "AspNetRoles" (
@@ -48,6 +47,8 @@ public static class IdentitySchemaInitializer
                 "AccessFailedCount" INTEGER NOT NULL DEFAULT 0
             );
             """);
+
+        await AddColumnIfMissingAsync(dbContext, "AspNetUsers", "AcademicYear", "INTEGER NOT NULL DEFAULT 1");
 
         await dbContext.Database.ExecuteSqlRawAsync("""
             CREATE TABLE IF NOT EXISTS "AspNetRoleClaims" (
